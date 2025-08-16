@@ -1,7 +1,7 @@
 import "./reset.css";
 import "./defaults.css";
 import { initMusic } from "./systems/music";
-import { mount, setTextContent } from "./helpers/dom";
+import { mount, setTextContent, svgEl } from "./helpers/dom";
 import { initState, resetState, state } from "./systems/state";
 import { SVGs } from "./systems/svgs";
 import { abbreviateNumber, mathRandomInteger } from "./helpers/numbers";
@@ -123,6 +123,9 @@ window.addEventListener("DOMContentLoaded", () => {
 	state.level.subscribe((level) => {
 		setTextContent(testButton2, `Test ${abbreviateNumber(level * 80)}`);
 	});
+
+	const catEyes = svgEl(SVGs.eyes, "#fff");
+	mount(gameContainer, catEyes);
 
 	setRealViewportValues();
 
