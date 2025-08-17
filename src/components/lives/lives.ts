@@ -5,7 +5,7 @@ import "./lives.css";
 
 export function createLivesContainer(parent: HTMLElement): void {
 	const livesContainer = el("div.lives-container");
-	const hearts: SVGElement[] = [];
+	const hearts: HTMLElement[] = [];
 
 	for (let i = 0; i < state.maxLives.value; i++) {
 		const heartIcon = svgEl(SVGs.hearts, "#a81f1fff");

@@ -6,9 +6,13 @@ import "./game-over.css";
 export function createGameOverScreen(parent: HTMLElement): void {
 	const gameOverContainer = el("div.game-over-container");
 	const gameOverText = el("h1", "Game Over");
-	const restartButton = createButton("Restart", () => {
-		window.location.reload();
-	});
+	const restartButton = createButton(
+		"Restart",
+		() => {
+			window.location.reload();
+		},
+		"primary",
+	);
 
 	mount(gameOverContainer, gameOverText);
 	mount(gameOverContainer, restartButton);
