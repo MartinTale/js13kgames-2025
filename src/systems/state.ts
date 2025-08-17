@@ -10,6 +10,8 @@ export type State = {
 	lastProcessedAt: Signal<number>;
 	sound: Signal<boolean | null>;
 	level: Signal<number>;
+	lives: Signal<number>;
+	maxLives: Signal<number>;
 };
 
 export const emptyState: State = {
@@ -18,6 +20,8 @@ export const emptyState: State = {
 	lastProcessedAt: createSignal(Date.now()),
 	sound: createSignal(null),
 	level: createSignal(0),
+	lives: createSignal(3),
+	maxLives: createSignal(3),
 };
 
 export let state: State;

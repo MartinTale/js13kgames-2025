@@ -31,6 +31,7 @@ function spawnCatEyes(): void {
 	mount(gameContainer, catEyes);
 
 	const disappearTimeout = setTimeout(() => {
+		state.lives.value = state.lives.value - 1;
 		tween(catEyes, {
 			to: { scale: 0, opacity: 0 },
 			duration: 500,
@@ -58,6 +59,10 @@ function spawnCatEyes(): void {
 }
 
 function processGameState(): void {
+	if (state.lives.value <= 0) {
+		return;
+	}
+
 	const newProcessingTime = Date.now();
 	const secondsPassed = (newProcessingTime - state.lastProcessedAt.value) / 1000;
 

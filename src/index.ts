@@ -2,7 +2,7 @@ import "./reset.css";
 import "./defaults.css";
 import { initMusic } from "./systems/music";
 import { mount } from "./helpers/dom";
-import { initState, resetState } from "./systems/state";
+import { initState, resetState, state } from "./systems/state";
 import { SVGs } from "./systems/svgs";
 import { initFireflies } from "./components/fireflies/fireflies";
 import { EdgeLinkButton, EdgeButton } from "./components/edge-button/edge-button";
@@ -10,6 +10,8 @@ import { initGame, startGameLoop } from "./game/game";
 import { closeModal, openModal } from "./components/modal/modal";
 import { titleScreen } from "./components/title-screen/title-screen";
 import { createScaleableContainer } from "./components/scaleable-container/scaleable-container";
+import { createLivesContainer } from "./components/lives/lives";
+import "./components/lives/lives.css";
 
 export let bodyElement: HTMLElement;
 export let gameContainer: HTMLElement;
@@ -24,8 +26,10 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	gameContainer = createScaleableContainer(bodyElement, 360, 780, "bottom", "game");
 	mount(bodyElement, gameContainer);
+	createLivesContainer(gameContainer);
   const screen = titleScreen(() => {
     screen.remove();
+    state.lives.value = state.maxLives.value;
     initGame();
     startGameLoop();
   });

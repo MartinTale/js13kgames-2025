@@ -1,0 +1,22 @@
+.lives-container {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	color: #fff;
+	font-size: 2rem;
+	display: flex;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.lives-container svg {
+	width: 2rem;
+	height: 2rem;
+	transition: all 250ms ease-in-out;
+	fill: #a81f1fff;
+}
+
+.lives-container svg.used {
+	transform: scale(0.6);
+	fill: #80808080;
+}
