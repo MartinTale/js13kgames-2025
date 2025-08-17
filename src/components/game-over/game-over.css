@@ -20,3 +20,7 @@
 	visibility: visible;
 	opacity: 1;
 }
+
+.game-over-container h1 {
+	margin-bottom: 2rem;
+}
