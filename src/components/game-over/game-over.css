@@ -1,0 +1,22 @@
+.game-over-container {
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	background-color: rgba(0, 0, 0, 0.5);
+	color: #fff;
+	font-size: 4rem;
+	visibility: hidden;
+	opacity: 0;
+	transition: all 250ms ease-in-out;
+}
+
+.game-over-container.active {
+	visibility: visible;
+	opacity: 1;
+}
