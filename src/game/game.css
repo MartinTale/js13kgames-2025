@@ -30,7 +30,7 @@
 	height: 100%;
 	background-color: #000;
 	opacity: 0.8;
-	background-image: linear-gradient(#111 1px, transparent 1px), linear-gradient(to right, #111 1px, #000 1px);
+	background-image: linear-gradient(#121212 1px, transparent 1px), linear-gradient(to right, #121212 1px, #000 1px);
 	background-size: 50px 50px;
 	animation: backgroundSlide 5s linear infinite;
 }

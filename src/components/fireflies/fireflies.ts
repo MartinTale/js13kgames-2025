@@ -2,7 +2,7 @@ import "./fireflies.css";
 import { el, mount } from "../../helpers/dom";
 import { bodyElement } from "../..";
 
-let fireflyColor: string = "#555";
+let fireflyColor: string = "#666";
 
 function draw(f: any, w: any, h: any, firefly: any) {
 	if (f.length < 100) {
