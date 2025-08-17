@@ -8,6 +8,7 @@ import { initFireflies } from "./components/fireflies/fireflies";
 import { EdgeLinkButton, EdgeButton } from "./components/edge-button/edge-button";
 import { initGame, startGameLoop } from "./game/game";
 import { closeModal, openModal } from "./components/modal/modal";
+import { titleScreen } from "./components/title-screen/title-screen";
 import { createScaleableContainer } from "./components/scaleable-container/scaleable-container";
 
 export let bodyElement: HTMLElement;
@@ -23,6 +24,12 @@ window.addEventListener("DOMContentLoaded", () => {
 
 	gameContainer = createScaleableContainer(bodyElement, 360, 780, "bottom", "game");
 	mount(bodyElement, gameContainer);
+  const screen = titleScreen(() => {
+    screen.remove();
+    initGame();
+    startGameLoop();
+  });
+  mount(gameContainer, screen);
 
 	initMusic();
 
@@ -74,9 +81,6 @@ window.addEventListener("DOMContentLoaded", () => {
 	}
 
 	setRealViewportValues();
-
-	initGame();
-	startGameLoop();
 });
 
 function setRealViewportValues() {
