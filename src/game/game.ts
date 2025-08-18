@@ -73,7 +73,7 @@ function spawnCatEyes(): void {
 	const catEyesSvg = svgEl(SVGs.evilEyes, "#fff");
 	mount(catEyes, catEyesSvg);
 
-	console.log(clientWidth, clientHeight, x, y, clampedX, clampedY);
+	
 
 	catEyes.style.transform = `translate(${clampedX}px, ${clampedY}px) rotate(${rotation}deg)`;
 
@@ -116,8 +116,15 @@ function spawnCatEyes(): void {
 	});
 }
 
+function endGame(): void {
+	const allEyes = document.querySelectorAll(".eyes");
+	allEyes.forEach((eye) => eye.remove());
+	catEyePositions.length = 0;
+}
+
 function processGameState(): void {
 	if (state.lives.value <= 0) {
+		endGame();
 		return;
 	}
 
