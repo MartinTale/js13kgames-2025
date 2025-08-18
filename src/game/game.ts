@@ -9,6 +9,10 @@ import "./game.css";
 let spawnInterval = 2000;
 let lastSpawn = 0;
 
+const catEyePositions: { x: number; y: number; id: string }[] = [];
+const MIN_DISTANCE = 150; // Minimum distance between centers of cat eyes
+const CAT_EYE_SIZE = 100; // Assumed size of the cat eye for collision detection
+
 export function initGame(): void {
 	//
 }
@@ -18,23 +22,69 @@ export function startGameLoop(): void {
 }
 
 function spawnCatEyes(): void {
+	const { clientWidth, clientHeight } = gameContainer;
+	let x: number;
+	let y: number;
+	let rotation: number;
+	let clampedX: number;
+	let clampedY: number;
+	let attempts = 0;
+	const MAX_ATTEMPTS = 10; // Max attempts to find a clear spot
+
+	const catEyeId = `cat-eye-${Date.now()}-${Math.random().toString(36).substring(7)}`; // Unique ID for tracking
+
+	do {
+		x = mathRandomInteger(0, clientWidth);
+		y = mathRandomInteger(0, clientHeight);
+		rotation = mathRandomInteger(-30, 30);
+
+		clampedX = clamp(x, CAT_EYE_SIZE / 2, clientWidth - CAT_EYE_SIZE / 2);
+		clampedY = clamp(y, CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2);
+
+		let collision = false;
+		for (const existingCatEye of catEyePositions) {
+			const distance = Math.sqrt(
+				Math.pow(clampedX - existingCatEye.x, 2) + Math.pow(clampedY - existingCatEye.y, 2),
+			);
+			if (distance < MIN_DISTANCE) {
+				collision = true;
+				break;
+			}
+		}
+
+		if (!collision) {
+			// No collision, add to positions and break loop
+			catEyePositions.push({
+				x: clampedX,
+				y: clampedY,
+				id: catEyeId,
+			});
+			break;
+		}
+
+		attempts++;
+		if (attempts >= MAX_ATTEMPTS) {
+			console.warn("Could not find a suitable spot for cat eye after multiple attempts.");
+			return; // Give up after max attempts
+		}
+	} while (true);
+
 	const catEyes = el("div.eyes");
 	const catEyesSvg = svgEl(SVGs.evilEyes, "#fff");
 	mount(catEyes, catEyesSvg);
-
-	const { clientWidth, clientHeight } = gameContainer;
-	const x = mathRandomInteger(0, clientWidth);
-	const y = mathRandomInteger(0, clientHeight);
-	const rotation = mathRandomInteger(-30, 30);
-
-	const clampedX = clamp(x, x - 100, clientWidth - 100);
-	const clampedY = clamp(y, y - 100, clientHeight - 100);
 
 	console.log(clientWidth, clientHeight, x, y, clampedX, clampedY);
 
 	catEyes.style.transform = `translate(${clampedX}px, ${clampedY}px) rotate(${rotation}deg)`;
 
 	mount(gameContainer, catEyes);
+
+	const removeCatEyeFromTracking = (id: string) => {
+		const index = catEyePositions.findIndex((ce) => ce.id === id);
+		if (index > -1) {
+			catEyePositions.splice(index, 1);
+		}
+	};
 
 	const disappearTimeout = setTimeout(() => {
 		state.lives.value = state.lives.value - 1;
@@ -44,6 +94,7 @@ function spawnCatEyes(): void {
 			easing: easings.easeInBack,
 			onComplete: () => {
 				catEyes.remove();
+				removeCatEyeFromTracking(catEyeId); // Remove from tracking
 			},
 		});
 	}, 2000);
@@ -59,6 +110,7 @@ function spawnCatEyes(): void {
 			easing: easings.easeOutExpo,
 			onComplete: () => {
 				catEyes.remove();
+				removeCatEyeFromTracking(catEyeId); // Remove from tracking
 			},
 		});
 	});
