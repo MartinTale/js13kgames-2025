@@ -15,6 +15,8 @@
 	cursor: pointer;
 	padding: 10px;
 	border-radius: 25px;
+	top: 0;
+	left: 0;
 }
 
 .eyes svg {

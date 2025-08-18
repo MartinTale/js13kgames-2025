@@ -1,7 +1,7 @@
 import { gameContainer } from "..";
 import { easings, tween, tweens } from "../systems/animation";
 import { el, mount, svgEl } from "../helpers/dom";
-import { mathRandomInteger } from "../helpers/numbers";
+import { clamp, mathRandomInteger } from "../helpers/numbers";
 import { state } from "../systems/state";
 import { SVGs } from "../systems/svgs";
 import "./game.css";
@@ -22,11 +22,17 @@ function spawnCatEyes(): void {
 	const catEyesSvg = svgEl(SVGs.evilEyes, "#fff");
 	mount(catEyes, catEyesSvg);
 
-	const x = mathRandomInteger(0, gameContainer.clientWidth - 50);
-	const y = mathRandomInteger(0, gameContainer.clientHeight - 50);
+	const { clientWidth, clientHeight } = gameContainer;
+	const x = mathRandomInteger(0, clientWidth);
+	const y = mathRandomInteger(0, clientHeight);
 	const rotation = mathRandomInteger(-30, 30);
 
-	catEyes.style.transform = `translate(${x}px, ${y}px) rotate(${rotation}deg)`;
+	const clampedX = clamp(x, x - 100, clientWidth - 100);
+	const clampedY = clamp(y, y - 100, clientHeight - 100);
+
+	console.log(clientWidth, clientHeight, x, y, clampedX, clampedY);
+
+	catEyes.style.transform = `translate(${clampedX}px, ${clampedY}px) rotate(${rotation}deg)`;
 
 	mount(gameContainer, catEyes);
 
