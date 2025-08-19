@@ -12,6 +12,7 @@ let lastSpawn = 0;
 const catEyePositions: { x: number; y: number; id: string }[] = [];
 const MIN_DISTANCE = 150; // Minimum distance between centers of cat eyes
 const CAT_EYE_SIZE = 100; // Assumed size of the cat eye for collision detection
+const Y_OFFSET = 70;
 
 export function initGame(): void {}
 
@@ -38,7 +39,7 @@ function spawnCatEyes(): void {
 		rotation = mathRandomInteger(-30, 30);
 
 		clampedX = clamp(x, CAT_EYE_SIZE / 2, clientWidth - CAT_EYE_SIZE / 2);
-		clampedY = clamp(y, CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2);
+		clampedY = clamp(y, Y_OFFSET + CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2 - Y_OFFSET);
 
 		let collision = false;
 		for (const existingCatEye of catEyePositions) {
@@ -129,7 +130,7 @@ function processGameState(): void {
 	}
 
 	const newProcessingTime = Date.now();
-	const secondsPassed = (newProcessingTime - state.lastProcessedAt.value) / 1000;
+	// const secondsPassed = (newProcessingTime - state.lastProcessedAt.value) / 1000;
 
 	Object.values(tweens).forEach((updateTween) => updateTween(newProcessingTime));
 
