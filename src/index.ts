@@ -29,25 +29,25 @@ window.addEventListener("DOMContentLoaded", () => {
 	mount(bodyElement, gameContainer);
 	createLivesContainer(gameContainer);
 	createGameOverScreen(gameContainer);
-  const screen = titleScreen(() => {
-    screen.remove();
-    state.lives.value = state.maxLives.value;
-    initGame();
-    startGameLoop();
-  });
-  mount(gameContainer, screen);
+	const screen = titleScreen(() => {
+		screen.remove();
+		state.lives.value = state.maxLives.value;
+		initGame();
+		startGameLoop();
+	});
+	mount(gameContainer, screen);
 
 	initMusic();
 
-	new EdgeLinkButton(bodyElement, SVGs.discord, "#5865F2", 8, -8, "https://discord.gg/kPf8XwNuZT");
-	new EdgeLinkButton(
-		bodyElement,
-		SVGs.coffee,
-		"#FBAA19",
-		64,
-		-8,
-		"https://ko-fi.com/martintale?ref=js13kgames-template",
-	);
+	// new EdgeLinkButton(bodyElement, SVGs.discord, "#5865F2", 8, -8, "https://discord.gg/kPf8XwNuZT");
+	// new EdgeLinkButton(
+	// 	bodyElement,
+	// 	SVGs.coffee,
+	// 	"#FBAA19",
+	// 	64,
+	// 	-8,
+	// 	"https://ko-fi.com/martintale?ref=js13kgames-template",
+	// );
 
 	soundToggle = new EdgeButton(bodyElement, SVGs.sound, "sound", 8, 8);
 
