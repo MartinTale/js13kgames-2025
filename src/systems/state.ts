@@ -12,6 +12,7 @@ export type State = {
 	level: Signal<number>;
 	lives: Signal<number>;
 	maxLives: Signal<number>;
+	gameStartedAt: Signal<number>;
 };
 
 export const emptyState: State = {
@@ -22,6 +23,7 @@ export const emptyState: State = {
 	level: createSignal(0),
 	lives: createSignal(3),
 	maxLives: createSignal(3),
+	gameStartedAt: createSignal(0),
 };
 
 export let state: State;

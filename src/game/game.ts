@@ -13,11 +13,10 @@ const catEyePositions: { x: number; y: number; id: string }[] = [];
 const MIN_DISTANCE = 150; // Minimum distance between centers of cat eyes
 const CAT_EYE_SIZE = 100; // Assumed size of the cat eye for collision detection
 
-export function initGame(): void {
-	//
-}
+export function initGame(): void {}
 
 export function startGameLoop(): void {
+	state.gameStartedAt.value = Date.now();
 	processGameState();
 }
 
@@ -73,8 +72,6 @@ function spawnCatEyes(): void {
 	const catEyesSvg = svgEl(SVGs.evilEyes, "#fff");
 	mount(catEyes, catEyesSvg);
 
-	
-
 	catEyes.style.transform = `translate(${clampedX}px, ${clampedY}px) rotate(${rotation}deg)`;
 
 	mount(gameContainer, catEyes);
@@ -87,7 +84,10 @@ function spawnCatEyes(): void {
 	};
 
 	const disappearTimeout = setTimeout(() => {
-		state.lives.value = state.lives.value - 1;
+		if (state.lives.value > 0) {
+			state.lives.value = state.lives.value - 1;
+		}
+
 		tween(catEyes, {
 			to: { scale: 0, opacity: 0 },
 			duration: 500,
@@ -138,8 +138,6 @@ function processGameState(): void {
 		lastSpawn = newProcessingTime;
 		spawnInterval = mathRandomInteger(500, 2000);
 	}
-
-	state.level.value += secondsPassed;
 
 	state.lastProcessedAt.value = newProcessingTime;
 	requestAnimationFrame(processGameState);
