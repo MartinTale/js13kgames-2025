@@ -1,0 +1,45 @@
+.debug-sound-panel {
+	position: fixed;
+	bottom: 10px;
+	right: 10px;
+	display: flex;
+	flex-direction: column;
+	gap: 5px;
+	background: rgba(0, 0, 0, 0.8);
+	padding: 10px;
+	border-radius: 5px;
+	border: 1px solid #333;
+	z-index: 1000;
+	font-family: monospace;
+}
+
+.debug-title {
+	color: #fff;
+	font-size: 12px;
+	text-align: center;
+	margin-bottom: 5px;
+	border-bottom: 1px solid #333;
+	padding-bottom: 5px;
+}
+
+.debug-sound-btn {
+	background: #222;
+	color: #fff;
+	border: 1px solid #444;
+	padding: 4px 8px;
+	border-radius: 3px;
+	font-size: 10px;
+	cursor: pointer;
+	transition: all 0.2s ease;
+	font-family: monospace;
+}
+
+.debug-sound-btn:hover {
+	background: #333;
+	border-color: #555;
+}
+
+.debug-sound-btn:active {
+	background: #111;
+	transform: scale(0.95);
+}

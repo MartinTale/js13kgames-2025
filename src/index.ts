@@ -13,6 +13,7 @@ import { createScaleableContainer } from "./components/scaleable-container/scale
 import { createLivesContainer } from "./components/lives/lives";
 import "./components/lives/lives.css";
 import { createGameOverScreen } from "./components/game-over/game-over";
+import { createDebugSoundPanel } from "./components/debug-sound-panel/debug-sound-panel";
 
 export let bodyElement: HTMLElement;
 export let gameContainer: HTMLElement;
@@ -29,6 +30,10 @@ window.addEventListener("DOMContentLoaded", () => {
 	mount(bodyElement, gameContainer);
 	createLivesContainer(gameContainer);
 	createGameOverScreen(gameContainer);
+	
+	if (import.meta.env.MODE === "development") {
+		createDebugSoundPanel(bodyElement);
+	}
 	const screen = titleScreen(() => {
 		screen.remove();
 		state.lives.value = state.maxLives.value;
