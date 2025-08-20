@@ -5,6 +5,7 @@ import { clamp, mathRandomInteger } from "../helpers/numbers";
 import { state } from "../systems/state";
 import { SVGs } from "../systems/svgs";
 import { triggerGameOver } from "../components/game-over/game-over";
+import { playSound, sounds } from "../systems/music";
 import "./game.css";
 
 let spawnInterval = 2000;
@@ -127,6 +128,7 @@ function spawnCatEyes(): void {
 		if (gameInteractionsDisabled) return;
 
 		clearTimeout(disappearTimeout);
+		playSound(sounds.meow);
 
 		tween(catEyes, {
 			to: {
