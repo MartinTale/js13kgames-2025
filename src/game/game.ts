@@ -1,7 +1,7 @@
 import { gameContainer } from "..";
 import { easings, tween, tweens } from "../systems/animation";
 import { el, mount, svgEl } from "../helpers/dom";
-import { clamp, mathRandomInteger, randomInteger } from "../helpers/numbers";
+import { clamp, mathRandomInteger } from "../helpers/numbers";
 import { state } from "../systems/state";
 import { SVGs } from "../systems/svgs";
 import { triggerGameOver } from "../components/game-over/game-over";
@@ -103,7 +103,9 @@ function spawnCatEyes(): void {
 		tween(catEyes, {
 			to: {
 				scale: 2,
-				rotate: 0,
+				rotate: rotation > 0 ? mathRandomInteger(-10, 5) : mathRandomInteger(5, 10),
+				x: clamp(clampedX, CAT_EYE_SIZE, clientWidth - CAT_EYE_SIZE),
+				y: clamp(clampedY, Y_OFFSET + CAT_EYE_SIZE, clientHeight - CAT_EYE_SIZE - Y_OFFSET),
 			},
 			duration: 300,
 			easing: easings.easeOutBack,
@@ -156,7 +158,7 @@ function endGame(): void {
 						opacity: 0,
 						scale: 0,
 					},
-					duration: 100,
+					duration: 200,
 					easing: easings.easeInBack,
 					onComplete: () => {
 						eye.remove();
