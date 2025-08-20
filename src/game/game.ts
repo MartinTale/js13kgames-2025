@@ -1,7 +1,7 @@
 import { gameContainer } from "..";
 import { easings, tween, tweens } from "../systems/animation";
 import { el, mount, svgEl } from "../helpers/dom";
-import { clamp, mathRandomInteger } from "../helpers/numbers";
+import { clamp, mathRandomInteger, randomInteger } from "../helpers/numbers";
 import { state } from "../systems/state";
 import { SVGs } from "../systems/svgs";
 import "./game.css";
@@ -89,13 +89,23 @@ function spawnCatEyes(): void {
 			state.lives.value = state.lives.value - 1;
 		}
 
+		catEyes.style.pointerEvents = "none";
+		catEyesSvg.style.fill = "#f00";
+
 		tween(catEyes, {
-			to: { scale: 0, opacity: 0 },
-			duration: 500,
-			easing: easings.easeInBack,
+			to: { scale: 2 },
+			duration: 300,
+			easing: easings.easeOutBack,
 			onComplete: () => {
-				catEyes.remove();
-				removeCatEyeFromTracking(catEyeId); // Remove from tracking
+				tween(catEyes, {
+					to: { opacity: 0 },
+					duration: 300,
+					easing: easings.easeInExpo,
+					onComplete: () => {
+						catEyes.remove();
+						removeCatEyeFromTracking(catEyeId); // Remove from tracking
+					},
+				});
 			},
 		});
 	}, 2000);
@@ -103,12 +113,13 @@ function spawnCatEyes(): void {
 	catEyes.addEventListener("click", () => {
 		clearTimeout(disappearTimeout);
 
-		catEyesSvg.style.fill = "#f00";
-
 		tween(catEyes, {
-			to: { scale: 1.2, opacity: 0 },
+			to: {
+				opacity: 0,
+				scale: 0,
+			},
 			duration: 300,
-			easing: easings.easeOutExpo,
+			easing: easings.easeInBack,
 			onComplete: () => {
 				catEyes.remove();
 				removeCatEyeFromTracking(catEyeId); // Remove from tracking
