@@ -19,6 +19,7 @@
 	left: -50px;
 	background-color: #000;
 	box-shadow: 0 0 50px rgba(0, 0, 0, 1);
+	z-index: 10;
 }
 
 .eyes svg {

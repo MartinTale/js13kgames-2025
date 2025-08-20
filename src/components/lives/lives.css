@@ -1,12 +1,14 @@
 .lives-container {
 	position: absolute;
 	top: 1rem;
-	right: 1rem;
+	right: 0;
 	color: #fff;
 	font-size: 2rem;
 	display: flex;
 	align-items: center;
 	gap: 0.5rem;
+	z-index: 40;
+	width: 100%;
 }
 
 .lives-container svg {
