@@ -5,7 +5,7 @@ import "./title-screen.css";
 export const titleScreen = (startGameCallback: () => void) => {
 	const screen = el("div.title-screen");
 
-	const gameTitle = el("div.game-title", "Black Cat");
+	const gameTitle = el("div.game-title", "Pet-a-Cat");
 	screen.appendChild(gameTitle);
 
 	const startGameButton = createButton("Start Game", startGameCallback, "primary");
