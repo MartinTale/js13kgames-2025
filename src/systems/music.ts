@@ -54,7 +54,7 @@ export function initMusic() {
 				},
 				{
 					type: "primary",
-					content: "Rock ON!",
+					content: "Meow!",
 					onClickCallback: () => {
 						state.sound.value = true;
 						if (soundToggle) {
