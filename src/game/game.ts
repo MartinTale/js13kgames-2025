@@ -13,7 +13,7 @@ let lastSpawn = 0;
 let gameInteractionsDisabled = false;
 let lastLifeTriggeringTime = 0;
 
-const catEyePositions: { x: number; y: number; id: string; spawnTime: number; type: "evil" | "heart" }[] = [];
+const catEyePositions: { x: number; y: number; id: string; spawnTime: number; type: "evil" | "heart" | "dead" }[] = [];
 const MIN_DISTANCE = 150; // Minimum distance between centers of cat eyes
 const CAT_EYE_SIZE = 100; // Assumed size of the cat eye for collision detection
 const Y_OFFSET = 70;
@@ -33,10 +33,19 @@ const removeCatEyeFromTracking = (id: string) => {
 };
 
 function spawnCatEyes(): void {
-	// Determine if we should spawn a heart cat eye
-	// Heart eyes only appear when player has lost lives (current lives < max lives)
-	const shouldSpawnHeart = state.lives.value < state.maxLives.value && Math.random() < 0.3; // 30% chance when lives are lost
-	const catEyeType: "evil" | "heart" = shouldSpawnHeart ? "heart" : "evil";
+	// Determine cat eye type based on game state and randomness
+	let catEyeType: "evil" | "heart" | "dead";
+
+	const random = Math.random();
+	const canSpawnHeart = state.lives.value < state.maxLives.value;
+
+	if (random < 0.7) {
+		catEyeType = "evil";
+	} else if (canSpawnHeart && random < 0.9) {
+		catEyeType = "heart";
+	} else {
+		catEyeType = "dead";
+	}
 
 	const { clientWidth, clientHeight } = gameContainer;
 	let x: number;
@@ -123,6 +132,25 @@ function spawnCatEyes(): void {
 
 		mount(catEyes, leftHeart);
 		mount(catEyes, rightHeart);
+	} else if (catEyeType === "dead") {
+		// Create two X-shaped dead eyes
+		const leftX = svgEl(SVGs.x, "#999");
+		const rightX = svgEl(SVGs.x, "#999");
+
+		leftX.style.position = "absolute";
+		leftX.style.width = "20px";
+		leftX.style.height = "20px";
+		leftX.style.left = "20px";
+		leftX.style.top = "40px";
+
+		rightX.style.position = "absolute";
+		rightX.style.width = "20px";
+		rightX.style.height = "20px";
+		rightX.style.right = "20px";
+		rightX.style.top = "40px";
+
+		mount(catEyes, leftX);
+		mount(catEyes, rightX);
 	} else {
 		const catEyesSvg = svgEl(SVGs.evilEyes, "#fff");
 		mount(catEyes, catEyesSvg);
@@ -137,6 +165,9 @@ function spawnCatEyes(): void {
 	const disappearTimeout = setTimeout(() => {
 		if (catEyeType === "heart") {
 			// Heart eyes do nothing when they timeout (not tapped)
+		} else if (catEyeType === "dead") {
+			// Dead eyes end the game immediately when they timeout (not tapped)
+			state.lives.value = 0;
 		} else {
 			// Evil eyes take a life when they disappear untapped
 			if (state.lives.value > 0) {
@@ -171,6 +202,32 @@ function spawnCatEyes(): void {
 						onComplete: () => {
 							catEyes.remove();
 							removeCatEyeFromTracking(catEyeId); // Remove from tracking
+						},
+					});
+				},
+			});
+		} else if (catEyeType === "dead") {
+			// Dead eyes turn red and grow when they timeout
+			const deadEyes = catEyes.querySelectorAll("svg");
+			deadEyes.forEach((x) => {
+				x.querySelector("path")!.setAttribute("fill", "#ff0000");
+			});
+
+			tween(catEyes, {
+				to: {
+					scale: 3,
+					rotate: rotation > 0 ? mathRandomInteger(-30, -20) : mathRandomInteger(20, 30),
+				},
+				duration: 500,
+				easing: easings.easeOutQuad,
+				onComplete: () => {
+					tween(catEyes, {
+						to: { opacity: 0 },
+						duration: 300,
+						easing: easings.easeInExpo,
+						onComplete: () => {
+							catEyes.remove();
+							removeCatEyeFromTracking(catEyeId);
 						},
 					});
 				},
@@ -222,7 +279,7 @@ function spawnCatEyes(): void {
 			if (state.lives.value < state.maxLives.value) {
 				state.lives.value = state.lives.value + 1;
 			}
-			
+
 			// Change color of both heart eyes when disappearing
 			const heartEyes = catEyes.querySelectorAll("svg");
 			heartEyes.forEach((heart) => {
@@ -246,6 +303,33 @@ function spawnCatEyes(): void {
 						onComplete: () => {
 							catEyes.remove();
 							removeCatEyeFromTracking(catEyeId); // Remove from tracking
+						},
+					});
+				},
+			});
+		} else if (catEyeType === "dead") {
+			// Dead eyes give bonus points when tapped (prevent game over)
+			// Change color of both X eyes to green when tapped
+			const deadEyes = catEyes.querySelectorAll("svg");
+			deadEyes.forEach((x) => {
+				x.querySelector("path")!.setAttribute("fill", "#00ff00");
+			});
+
+			tween(catEyes, {
+				to: {
+					scale: 0.5,
+					rotate: rotation + mathRandomInteger(180, 360),
+				},
+				duration: 800,
+				easing: easings.easeOutBounce,
+				onComplete: () => {
+					tween(catEyes, {
+						to: { opacity: 0 },
+						duration: 200,
+						easing: easings.easeInExpo,
+						onComplete: () => {
+							catEyes.remove();
+							removeCatEyeFromTracking(catEyeId);
 						},
 					});
 				},
@@ -281,7 +365,12 @@ function endGame(): void {
 		const eyeId = eye.getAttribute("data-id");
 		if (eyeId) {
 			const catEyeData = catEyePositions.find((ce) => ce.id === eyeId);
-			if (catEyeData && (catEyeData.spawnTime > lastLifeTriggeringTime || catEyeData.type === "heart")) {
+			if (
+				catEyeData &&
+				(catEyeData.spawnTime > lastLifeTriggeringTime ||
+					catEyeData.type === "heart" ||
+					catEyeData.type === "dead")
+			) {
 				tween(eye as HTMLElement, {
 					to: {
 						opacity: 0,
