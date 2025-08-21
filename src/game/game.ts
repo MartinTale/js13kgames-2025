@@ -264,15 +264,17 @@ function spawnCatEyes(): void {
 		catEyes.style.backgroundColor = "transparent";
 		catEyes.style.boxShadow = "none";
 
-		playSound(sounds.meow);
+		if (catEyeType !== "dead") {
+			playSound(sounds.meow);
+		}
 
 		if (catEyeType === "heart") {
 			const heartEyes = catEyes.querySelectorAll("svg");
-			
+
 			if (state.lives.value < state.maxLives.value) {
 				// Heart eyes restore a life when tapped and player has lost lives
 				state.lives.value = state.lives.value + 1;
-				
+
 				// Change color to normal pink
 				heartEyes.forEach((heart) => {
 					heart.querySelector("path")!.setAttribute("fill", "#ff69b4");
@@ -280,7 +282,7 @@ function spawnCatEyes(): void {
 			} else {
 				// Heart eyes give bonus points when tapped and player has max lives
 				state.score.value += 25;
-				
+
 				// Change color to gold for bonus points
 				heartEyes.forEach((heart) => {
 					heart.querySelector("path")!.setAttribute("stroke", "#ffd700");
@@ -347,7 +349,7 @@ function spawnCatEyes(): void {
 		} else {
 			// Evil eyes give points when tapped
 			state.score.value += 10;
-			
+
 			const evilEyes = catEyes.querySelectorAll("svg");
 			evilEyes.forEach((evil) => {
 				evil.querySelector("path")!.setAttribute("fill", "#ffffff66");
@@ -394,6 +396,10 @@ function endGame(): void {
 			}
 		}
 	});
+
+	setTimeout(() => {
+		playSound(sounds.loss);
+	}, 600);
 
 	setTimeout(
 		() => {

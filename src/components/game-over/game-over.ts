@@ -25,17 +25,15 @@ export function createGameOverScreen(parent: HTMLElement): void {
 
 	gameOverTrigger = () => {
 		const survivalTime = (Date.now() - state.gameStartedAt.value) / 1000;
-		scoreElement.innerHTML = `Final Score:&nbsp;<span style='font-weight: bold; color: #ffd700;'>${state.score.value}</span>`;
-		survivalTimeElement.innerHTML = `You survived for&nbsp;<span style='font-weight: bold;'>${survivalTime.toFixed(
-			2,
-		)} seconds.</span>`;
-		
+		scoreElement.innerHTML = `🏆&nbsp;<span style='font-weight: bold; color: #ffd700;'>${state.score.value}</span>`;
+		survivalTimeElement.innerHTML = `⏱️&nbsp;<span style='font-weight: bold;'>${survivalTime.toFixed(2)}s</span>`;
+
 		// Hide the in-game UI elements
-		const scoreDisplay = parent.querySelector('.score-container') as HTMLElement;
-		const livesDisplay = parent.querySelector('.lives-container') as HTMLElement;
-		if (scoreDisplay) scoreDisplay.style.display = 'none';
-		if (livesDisplay) livesDisplay.style.display = 'none';
-		
+		const scoreDisplay = parent.querySelector(".score-container") as HTMLElement;
+		const livesDisplay = parent.querySelector(".lives-container") as HTMLElement;
+		if (scoreDisplay) scoreDisplay.style.display = "none";
+		if (livesDisplay) livesDisplay.style.display = "none";
+
 		gameOverContainer.classList.add("active");
 	};
 

@@ -39,7 +39,7 @@ export function createLivesContainer(parent: HTMLElement): void {
 
 	const showDamageEffect = (heart: HTMLElement) => {
 		// Play scratch sound
-		playSound(sounds.scratch);
+		playSound(sounds.scratch2);
 
 		// Use X overlay for dead damage, scratch for evil damage
 		const damageType = state.lastDamageType.value;
