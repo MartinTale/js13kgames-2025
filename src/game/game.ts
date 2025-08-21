@@ -136,10 +136,7 @@ function spawnCatEyes(): void {
 
 	const disappearTimeout = setTimeout(() => {
 		if (catEyeType === "heart") {
-			// Heart eyes restore a life when they disappear untapped
-			if (state.lives.value < state.maxLives.value) {
-				state.lives.value = state.lives.value + 1;
-			}
+			// Heart eyes do nothing when they timeout (not tapped)
 		} else {
 			// Evil eyes take a life when they disappear untapped
 			if (state.lives.value > 0) {
@@ -221,6 +218,11 @@ function spawnCatEyes(): void {
 		playSound(sounds.meow);
 
 		if (catEyeType === "heart") {
+			// Heart eyes restore a life when tapped
+			if (state.lives.value < state.maxLives.value) {
+				state.lives.value = state.lives.value + 1;
+			}
+			
 			// Change color of both heart eyes when disappearing
 			const heartEyes = catEyes.querySelectorAll("svg");
 			heartEyes.forEach((heart) => {
