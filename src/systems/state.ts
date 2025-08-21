@@ -1,7 +1,7 @@
 import { rng } from "../helpers/numbers";
 import { Signal, createSignal } from "./signals";
 
-const STATE_KEY = "js13kgames-template";
+const STATE_KEY = "js13kgames-2025";
 
 export type Path = "sound" | "screen";
 

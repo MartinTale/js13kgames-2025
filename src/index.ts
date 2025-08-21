@@ -32,7 +32,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	createLivesContainer(gameContainer);
 	createScoreContainer(gameContainer);
 	createGameOverScreen(gameContainer);
-	
+
 	if (import.meta.env.MODE === "development") {
 		createDebugSoundPanel(bodyElement);
 	}
@@ -54,7 +54,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	// 	"#FBAA19",
 	// 	64,
 	// 	-8,
-	// 	"https://ko-fi.com/martintale?ref=js13kgames-template",
+	// 	"https://ko-fi.com/martintale?ref=js13kgames-2025",
 	// );
 
 	soundToggle = new EdgeButton(bodyElement, SVGs.sound, "sound", 8, 8);
