@@ -20,4 +20,5 @@
 .lives-container svg.used {
 	transform: scale(0.6);
 	fill: #80808080;
+	stroke: #80808080;
 }
