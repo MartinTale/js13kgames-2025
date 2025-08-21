@@ -166,9 +166,7 @@ function spawnCatEyes(): void {
 		if (catEyeType === "heart") {
 			// Heart eyes do nothing when they timeout (not tapped)
 		} else if (catEyeType === "dead") {
-			// Dead eyes end the game immediately when they timeout (not tapped)
-			state.lastDamageType.value = "dead";
-			state.lives.value = 0;
+			// Dead eyes do nothing when they timeout (not tapped)
 		} else {
 			// Evil eyes take a life when they disappear untapped
 			if (state.lives.value > 0) {
@@ -209,29 +207,22 @@ function spawnCatEyes(): void {
 				},
 			});
 		} else if (catEyeType === "dead") {
-			// Dead eyes turn red and grow when they timeout
+			// Dead eyes just fade out when they timeout
 			const deadEyes = catEyes.querySelectorAll("svg");
 			deadEyes.forEach((x) => {
-				x.querySelector("path")!.setAttribute("fill", "#ff0000");
+				x.querySelector("path")!.setAttribute("fill", "#ffffff66");
 			});
 
 			tween(catEyes, {
 				to: {
-					scale: 3,
-					rotate: rotation > 0 ? mathRandomInteger(-30, -20) : mathRandomInteger(20, 30),
+					opacity: 0,
+					scale: 0,
 				},
-				duration: 500,
-				easing: easings.easeOutQuad,
+				duration: 300,
+				easing: easings.easeInBack,
 				onComplete: () => {
-					tween(catEyes, {
-						to: { opacity: 0 },
-						duration: 300,
-						easing: easings.easeInExpo,
-						onComplete: () => {
-							catEyes.remove();
-							removeCatEyeFromTracking(catEyeId);
-						},
-					});
+					catEyes.remove();
+					removeCatEyeFromTracking(catEyeId);
 				},
 			});
 		} else {
@@ -314,6 +305,7 @@ function spawnCatEyes(): void {
 			if (state.lives.value > 0) {
 				state.lastDamageType.value = "dead";
 				state.lives.value = state.lives.value - 1;
+				lastLifeTriggeringTime = spawnTime; // Track when this life-triggering cat eye was spawned
 			}
 
 			// Change color of both X eyes to red when tapped
@@ -324,11 +316,13 @@ function spawnCatEyes(): void {
 
 			tween(catEyes, {
 				to: {
-					scale: 0.5,
-					rotate: rotation + mathRandomInteger(180, 360),
+					scale: 2,
+					rotate: rotation > 0 ? mathRandomInteger(-15, -5) : mathRandomInteger(5, 15),
+					x: clamp(clampedX, CAT_EYE_SIZE / 2, clientWidth - CAT_EYE_SIZE / 2),
+					y: clamp(clampedY, Y_OFFSET + CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2 - Y_OFFSET),
 				},
-				duration: 800,
-				easing: easings.easeOutBounce,
+				duration: 300,
+				easing: easings.swingTo,
 				onComplete: () => {
 					tween(catEyes, {
 						to: { opacity: 0 },
@@ -372,12 +366,7 @@ function endGame(): void {
 		const eyeId = eye.getAttribute("data-id");
 		if (eyeId) {
 			const catEyeData = catEyePositions.find((ce) => ce.id === eyeId);
-			if (
-				catEyeData &&
-				(catEyeData.spawnTime > lastLifeTriggeringTime ||
-					catEyeData.type === "heart" ||
-					catEyeData.type === "dead")
-			) {
+			if (catEyeData && (catEyeData.spawnTime > lastLifeTriggeringTime || catEyeData.type === "heart")) {
 				tween(eye as HTMLElement, {
 					to: {
 						opacity: 0,
@@ -394,11 +383,14 @@ function endGame(): void {
 		}
 	});
 
-	setTimeout(() => {
-		allEyes.forEach((eye) => eye.remove());
-		catEyePositions.length = 0;
-		triggerGameOver();
-	}, 1000);
+	setTimeout(
+		() => {
+			allEyes.forEach((eye) => eye.remove());
+			catEyePositions.length = 0;
+			triggerGameOver();
+		},
+		state.lastDamageType.value === "dead" ? 1500 : 1000,
+	);
 }
 
 function processGameState(): void {
