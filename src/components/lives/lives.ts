@@ -27,8 +27,8 @@ export function createLivesContainer(parent: HTMLElement): void {
 			if (i < lives) {
 				hearts[i].classList.remove("used");
 			} else if (i >= lives && i < previousLives) {
-				// This heart was just lost - show scratch effect
-				showScratchEffect(hearts[i]);
+				// This heart was just lost - show damage effect
+				showDamageEffect(hearts[i]);
 				hearts[i].classList.add("used");
 			} else {
 				hearts[i].classList.add("used");
@@ -37,33 +37,64 @@ export function createLivesContainer(parent: HTMLElement): void {
 		previousLives = lives;
 	};
 
-	const showScratchEffect = (heart: HTMLElement) => {
+	const showDamageEffect = (heart: HTMLElement) => {
 		// Play scratch sound
 		playSound(sounds.scratch);
 
-		// Create scratch overlay
-		const scratchOverlay = svgEl(SVGs.tripleScratches, "#a81f1fff");
-		scratchOverlay.style.position = "absolute";
-		scratchOverlay.style.top = "0";
-		scratchOverlay.style.left = "0";
-		scratchOverlay.style.width = "100%";
-		scratchOverlay.style.height = "100%";
-		scratchOverlay.style.zIndex = "10";
-		scratchOverlay.style.pointerEvents = "none";
+		// Use X overlay for dead damage, scratch for evil damage
+		const damageType = state.lastDamageType.value;
+		let overlay;
 
-		// Add scratch overlay to heart's container
+		if (damageType === "dead") {
+			// Create X overlay for dead cat eye damage
+			overlay = svgEl(SVGs.x, "#666");
+		} else {
+			// Create scratch overlay for evil cat eye damage (default)
+			overlay = svgEl(SVGs.tripleScratches, "#a81f1fff");
+		}
+
+		overlay.style.position = "absolute";
+		overlay.style.top = damageType === "dead" ? "-2px" : "0";
+		overlay.style.left = "0";
+		overlay.style.width = "100%";
+		overlay.style.height = "100%";
+		overlay.style.zIndex = "10";
+		overlay.style.pointerEvents = "none";
+
+		if (damageType === "dead") {
+			overlay.style.transform = "scale(1.5) rotate(45deg)";
+		}
+
+		// Add overlay to heart's container
 		const heartContainer = heart.parentElement!;
-		mount(heartContainer, scratchOverlay);
+		mount(heartContainer, overlay);
 
-		// Animate scratch effect
-		tween(scratchOverlay, {
-			to: { opacity: 0 },
-			duration: 800,
-			easing: easings.easeOutQuad,
-			onComplete: () => {
-				scratchOverlay.remove();
-			},
-		});
+		if (damageType === "dead") {
+			tween(overlay, {
+				to: { rotate: 90, scale: 0.6 },
+				duration: 500,
+				easing: easings.easeOutBounce,
+				onComplete: () => {
+					tween(overlay, {
+						to: { opacity: 0 },
+						duration: 300,
+						easing: easings.easeOutQuad,
+						onComplete: () => {
+							overlay.remove();
+						},
+					});
+				},
+			});
+		} else {
+			tween(overlay, {
+				to: { opacity: 0 },
+				duration: 800,
+				easing: easings.easeOutQuad,
+				onComplete: () => {
+					overlay.remove();
+				},
+			});
+		}
 	};
 
 	state.lives.subscribe(updateLives);

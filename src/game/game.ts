@@ -39,9 +39,9 @@ function spawnCatEyes(): void {
 	const random = Math.random();
 	const canSpawnHeart = state.lives.value < state.maxLives.value;
 
-	if (random < 0.7) {
+	if (random < 0.3) {
 		catEyeType = "evil";
-	} else if (canSpawnHeart && random < 0.9) {
+	} else if (canSpawnHeart && random < 0.5) {
 		catEyeType = "heart";
 	} else {
 		catEyeType = "dead";
@@ -167,10 +167,12 @@ function spawnCatEyes(): void {
 			// Heart eyes do nothing when they timeout (not tapped)
 		} else if (catEyeType === "dead") {
 			// Dead eyes end the game immediately when they timeout (not tapped)
+			state.lastDamageType.value = "dead";
 			state.lives.value = 0;
 		} else {
 			// Evil eyes take a life when they disappear untapped
 			if (state.lives.value > 0) {
+				state.lastDamageType.value = "evil";
 				state.lives.value = state.lives.value - 1;
 				lastLifeTriggeringTime = spawnTime; // Track when this life-triggering cat eye was spawned
 			}
@@ -308,11 +310,16 @@ function spawnCatEyes(): void {
 				},
 			});
 		} else if (catEyeType === "dead") {
-			// Dead eyes give bonus points when tapped (prevent game over)
-			// Change color of both X eyes to green when tapped
+			// Dead eyes lose a life when tapped
+			if (state.lives.value > 0) {
+				state.lastDamageType.value = "dead";
+				state.lives.value = state.lives.value - 1;
+			}
+
+			// Change color of both X eyes to red when tapped
 			const deadEyes = catEyes.querySelectorAll("svg");
 			deadEyes.forEach((x) => {
-				x.querySelector("path")!.setAttribute("fill", "#00ff00");
+				x.querySelector("path")!.setAttribute("fill", "#ff0000");
 			});
 
 			tween(catEyes, {
