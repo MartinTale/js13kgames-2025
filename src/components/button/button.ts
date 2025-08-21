@@ -2,7 +2,7 @@ import "./button.css";
 import { el } from "../../helpers/dom";
 import { playSound, sounds } from "../../systems/music";
 
-export type ButtonType = "normal" | "primary" | "danger" | "disabled";
+export type ButtonType = "normal" | "primary" | "danger" | "disabled" | "muted";
 
 export type Button = {
 	type: ButtonType;

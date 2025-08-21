@@ -46,7 +46,7 @@ export function initMusic() {
 			"",
 			[
 				{
-					type: "danger",
+					type: "muted",
 					content: "No",
 					onClickCallback: () => {
 						state.sound.value = false;

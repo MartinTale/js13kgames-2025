@@ -19,10 +19,14 @@ button.disabled {
 	opacity: 0.25;
 }
 
-button.danger {
+button.muted {
+	opacity: 0.5;
+}
+
+/* button.danger {
 	color: #f00;
 	border-color: #f00;
-}
+} */
 
 button.normal {
 	color: #fff;

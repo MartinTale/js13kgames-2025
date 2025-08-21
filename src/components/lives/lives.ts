@@ -42,7 +42,7 @@ export function createLivesContainer(parent: HTMLElement): void {
 		playSound(sounds.scratch);
 
 		// Create scratch overlay
-		const scratchOverlay = svgEl(SVGs.tripleScratches, "#ff0000");
+		const scratchOverlay = svgEl(SVGs.tripleScratches, "#a81f1fff");
 		scratchOverlay.style.position = "absolute";
 		scratchOverlay.style.top = "0";
 		scratchOverlay.style.left = "0";
