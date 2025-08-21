@@ -154,39 +154,58 @@ function spawnCatEyes(): void {
 		catEyes.style.boxShadow = "none";
 
 		if (catEyeType === "heart") {
-			// Change color of both heart eyes when disappearing
 			const heartEyes = catEyes.querySelectorAll("svg");
 			heartEyes.forEach((heart) => {
-				heart.querySelector("path")!.setAttribute("fill", "#ff69b4");
+				heart.querySelector("path")!.setAttribute("stroke", "#ffffff66");
+			});
+
+			tween(catEyes, {
+				to: {
+					opacity: 0,
+					scale: 0,
+				},
+				duration: 300,
+				easing: easings.easeInBack,
+				onComplete: () => {
+					tween(catEyes, {
+						to: { opacity: 0 },
+						duration: 300,
+						easing: easings.easeInExpo,
+						onComplete: () => {
+							catEyes.remove();
+							removeCatEyeFromTracking(catEyeId); // Remove from tracking
+						},
+					});
+				},
 			});
 		} else {
 			const catEyesSvg = catEyes.querySelector("svg");
 			if (catEyesSvg) {
 				catEyesSvg.style.fill = "#f00";
 			}
-		}
 
-		tween(catEyes, {
-			to: {
-				scale: 2,
-				rotate: rotation > 0 ? mathRandomInteger(-20, -10) : mathRandomInteger(10, 20),
-				x: clamp(clampedX, CAT_EYE_SIZE, clientWidth - CAT_EYE_SIZE),
-				y: clamp(clampedY, Y_OFFSET + CAT_EYE_SIZE, clientHeight - CAT_EYE_SIZE - Y_OFFSET),
-			},
-			duration: catEyeType === "heart" ? 1500 : 300,
-			easing: catEyeType === "heart" ? easings.elastic : easings.swingTo,
-			onComplete: () => {
-				tween(catEyes, {
-					to: { opacity: 0 },
-					duration: 300,
-					easing: easings.easeInExpo,
-					onComplete: () => {
-						catEyes.remove();
-						removeCatEyeFromTracking(catEyeId); // Remove from tracking
-					},
-				});
-			},
-		});
+			tween(catEyes, {
+				to: {
+					scale: 2,
+					rotate: rotation > 0 ? mathRandomInteger(-15, -5) : mathRandomInteger(5, 15),
+					x: clamp(clampedX, CAT_EYE_SIZE / 2, clientWidth - CAT_EYE_SIZE / 2),
+					y: clamp(clampedY, Y_OFFSET + CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2 - Y_OFFSET),
+				},
+				duration: 300,
+				easing: easings.swingTo,
+				onComplete: () => {
+					tween(catEyes, {
+						to: { opacity: 0 },
+						duration: 300,
+						easing: easings.easeInExpo,
+						onComplete: () => {
+							catEyes.remove();
+							removeCatEyeFromTracking(catEyeId); // Remove from tracking
+						},
+					});
+				},
+			});
+		}
 	}, 2000);
 
 	catEyes.addEventListener("click", () => {
@@ -194,26 +213,60 @@ function spawnCatEyes(): void {
 
 		clearTimeout(disappearTimeout);
 
-		if (catEyeType === "heart") {
-			// Heart eyes do nothing when tapped - just disappear silently
-			// No sound, no life change
-		} else {
-			// Evil eyes make sound when tapped (normal behavior)
-			playSound(sounds.meow);
-		}
+		catEyes.style.zIndex = "11";
+		catEyes.style.pointerEvents = "none";
+		catEyes.style.backgroundColor = "transparent";
+		catEyes.style.boxShadow = "none";
 
-		tween(catEyes, {
-			to: {
-				opacity: 0,
-				scale: 0,
-			},
-			duration: 300,
-			easing: easings.easeInBack,
-			onComplete: () => {
-				catEyes.remove();
-				removeCatEyeFromTracking(catEyeId); // Remove from tracking
-			},
-		});
+		playSound(sounds.meow);
+
+		if (catEyeType === "heart") {
+			// Change color of both heart eyes when disappearing
+			const heartEyes = catEyes.querySelectorAll("svg");
+			heartEyes.forEach((heart) => {
+				heart.querySelector("path")!.setAttribute("fill", "#ff69b4");
+			});
+
+			tween(catEyes, {
+				to: {
+					scale: 1.5,
+					rotate: rotation > 0 ? mathRandomInteger(-10, -5) : mathRandomInteger(5, 10),
+					x: clamp(clampedX, CAT_EYE_SIZE / 2, clientWidth - CAT_EYE_SIZE / 2),
+					y: clamp(clampedY, Y_OFFSET + CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2 - Y_OFFSET),
+				},
+				duration: 1000,
+				easing: easings.elastic,
+				onComplete: () => {
+					tween(catEyes, {
+						to: { opacity: 0 },
+						duration: 300,
+						easing: easings.easeInExpo,
+						onComplete: () => {
+							catEyes.remove();
+							removeCatEyeFromTracking(catEyeId); // Remove from tracking
+						},
+					});
+				},
+			});
+		} else {
+			const evilEyes = catEyes.querySelectorAll("svg");
+			evilEyes.forEach((evil) => {
+				evil.querySelector("path")!.setAttribute("fill", "#ffffff66");
+			});
+
+			tween(catEyes, {
+				to: {
+					opacity: 0,
+					scale: 0,
+				},
+				duration: 300,
+				easing: easings.easeInBack,
+				onComplete: () => {
+					catEyes.remove();
+					removeCatEyeFromTracking(catEyeId); // Remove from tracking
+				},
+			});
+		}
 	});
 }
 
