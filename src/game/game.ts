@@ -37,11 +37,10 @@ function spawnCatEyes(): void {
 	let catEyeType: "evil" | "heart" | "dead";
 
 	const random = Math.random();
-	const canSpawnHeart = state.lives.value < state.maxLives.value;
 
-	if (random < 0.3) {
+	if (random < 0.7) {
 		catEyeType = "evil";
-	} else if (canSpawnHeart && random < 0.5) {
+	} else if (random < 0.85) {
 		catEyeType = "heart";
 	} else {
 		catEyeType = "dead";
