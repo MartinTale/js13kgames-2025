@@ -12,6 +12,7 @@ import { titleScreen } from "./components/title-screen/title-screen";
 import { createScaleableContainer } from "./components/scaleable-container/scaleable-container";
 import { createLivesContainer } from "./components/lives/lives";
 import "./components/lives/lives.css";
+import { createScoreContainer } from "./components/score/score";
 import { createGameOverScreen } from "./components/game-over/game-over";
 import { createDebugSoundPanel } from "./components/debug-sound-panel/debug-sound-panel";
 
@@ -29,6 +30,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	gameContainer = createScaleableContainer(bodyElement, 360, 780, "bottom", "game");
 	mount(bodyElement, gameContainer);
 	createLivesContainer(gameContainer);
+	createScoreContainer(gameContainer);
 	createGameOverScreen(gameContainer);
 	
 	if (import.meta.env.MODE === "development") {
@@ -37,6 +39,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	const screen = titleScreen(() => {
 		screen.remove();
 		state.lives.value = state.maxLives.value;
+		state.score.value = 0;
 		initGame();
 		startGameLoop();
 	});

@@ -25,3 +25,13 @@
 .game-over-container h1 {
 	margin-bottom: 2rem;
 }
+
+.game-over-container .final-score {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.game-over-container .survival-time {
+	font-size: 2rem;
+	margin-bottom: 2rem;
+}

@@ -14,6 +14,7 @@ export type State = {
 	maxLives: Signal<number>;
 	gameStartedAt: Signal<number>;
 	lastDamageType: Signal<"evil" | "dead" | null>;
+	score: Signal<number>;
 };
 
 export const emptyState: State = {
@@ -26,6 +27,7 @@ export const emptyState: State = {
 	maxLives: createSignal(3),
 	gameStartedAt: createSignal(0),
 	lastDamageType: createSignal(null),
+	score: createSignal(0),
 };
 
 export let state: State;
