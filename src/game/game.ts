@@ -15,6 +15,10 @@ let lastLifeTriggeringTime = 0;
 let debugMode = false;
 let difficultyUpdateTimeout: number | null = null;
 
+// Cat eye spawn queue system
+let spawnQueue: ("evil" | "heart" | "dead")[] = [];
+const QUEUE_SIZE = 20;
+
 // Difficulty progression thresholds
 const DIFFICULTY_THRESHOLDS = [
 	{ score: 0, spawnMin: 1500, spawnMax: 2500, visibilityDuration: 3000, level: 1, name: "Kitten", color: "#87CEEB" }, // Sky Blue
@@ -92,6 +96,51 @@ export function getDifficultyConfig(level: number) {
 	return DIFFICULTY_THRESHOLDS.find((threshold) => threshold.level === level) || DIFFICULTY_THRESHOLDS[0];
 }
 
+// Generate and shuffle a new spawn queue
+function generateSpawnQueue(isInitialQueue = false): ("evil" | "heart" | "dead")[] {
+	const queue: ("evil" | "heart" | "dead")[] = [];
+
+	// Add exact counts: 14 evil, 3 heart, 3 dead (total 20)
+	const evilEyeCount = Math.floor(QUEUE_SIZE * 0.7);
+	for (let i = 0; i < evilEyeCount; i++) {
+		queue.push("evil");
+	}
+
+	const heartEyeCount = Math.floor(QUEUE_SIZE * 0.15);
+	for (let i = 0; i < heartEyeCount; i++) {
+		queue.push("heart");
+	}
+
+	const deadEyeCount = Math.floor(QUEUE_SIZE * 0.15);
+	for (let i = 0; i < deadEyeCount; i++) {
+		queue.push("dead");
+	}
+
+	if (isInitialQueue) {
+		// For initial queue, ensure first 5 positions are evil eyes
+		// Put all evil eyes first, then heart and dead eyes
+		const evilEyes = queue.filter((eye) => eye === "evil");
+		const otherEyes = queue.filter((eye) => eye !== "evil");
+
+		// First 5 are guaranteed evil, shuffle the rest
+		const shuffledOthers = [...evilEyes.slice(5), ...otherEyes];
+		for (let i = shuffledOthers.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[shuffledOthers[i], shuffledOthers[j]] = [shuffledOthers[j], shuffledOthers[i]];
+		}
+
+		return [...evilEyes.slice(0, 5), ...shuffledOthers];
+	} else {
+		// Shuffle the array using Fisher-Yates algorithm
+		for (let i = queue.length - 1; i > 0; i--) {
+			const j = Math.floor(Math.random() * (i + 1));
+			[queue[i], queue[j]] = [queue[j], queue[i]];
+		}
+
+		return queue;
+	}
+}
+
 const catEyePositions: { x: number; y: number; id: string; spawnTime: number; type: "evil" | "heart" | "dead" }[] = [];
 const MIN_DISTANCE = 150; // Minimum distance between centers of cat eyes
 const CAT_EYE_SIZE = 100; // Assumed size of the cat eye for collision detection
@@ -105,6 +154,9 @@ export function setDebugMode(enabled: boolean): void {
 
 export function startGameLoop(): void {
 	state.gameStartedAt.value = Date.now();
+
+	// Initialize spawn queue
+	spawnQueue = generateSpawnQueue(true);
 
 	// Subscribe to score changes to update difficulty with delay
 	state.score.subscribe(() => {
@@ -131,18 +183,13 @@ const removeCatEyeFromTracking = (id: string) => {
 };
 
 function spawnCatEyes(): void {
-	// Determine cat eye type based on game state and randomness
-	let catEyeType: "evil" | "heart" | "dead";
-
-	const random = Math.random();
-
-	if (random < 0.7) {
-		catEyeType = "evil";
-	} else if (random < 0.85) {
-		catEyeType = "heart";
-	} else {
-		catEyeType = "dead";
+	// Refill queue if empty
+	if (spawnQueue.length === 0) {
+		spawnQueue = generateSpawnQueue();
 	}
+
+	// Get next cat eye type from queue
+	const catEyeType = spawnQueue.shift()!;
 
 	const { clientWidth, clientHeight } = gameContainer;
 	let x: number;
