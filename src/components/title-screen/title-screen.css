@@ -7,13 +7,48 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	justify-content: center;
+	justify-content: space-between;
 	z-index: 50;
 }
 
 .game-title {
-	font-size: 3rem;
+	font-size: 2.5rem;
+	margin-bottom: 1rem;
+	background: linear-gradient(45deg, #ff6b35, #f7931e, #ffd700, #ff6b35);
+	background-size: 300% 300%;
+	-webkit-background-clip: text;
+	-webkit-text-fill-color: transparent;
+	background-clip: text;
+	text-shadow: 2px 2px 8px rgba(255, 107, 53, 0.3);
+	font-weight: bold;
+	letter-spacing: 2px;
+	animation: titleGlow 3s ease-in-out infinite;
+	transform: scale(1);
+	transition: transform 0.3s ease;
+	white-space: nowrap;
+}
+
+.game-title:hover {
+	transform: scale(1.05);
+}
+
+@keyframes titleGlow {
+	0%,
+	100% {
+		background-position: 0% 50%;
+		filter: drop-shadow(0 0 10px rgba(255, 107, 53, 0.5));
+	}
+	50% {
+		background-position: 100% 50%;
+		filter: drop-shadow(0 0 20px rgba(255, 215, 0, 0.7));
+	}
+}
+
+.game-subtitle {
+	font-size: 1.2rem;
 	margin-bottom: 2rem;
+	color: #ccc;
+	font-style: italic;
 }
 
 .leaderboard {
@@ -21,6 +56,8 @@
 	text-align: center;
 	display: flex;
 	flex-direction: column;
+	min-height: 400px;
+	justify-content: flex-start;
 }
 
 .leaderboard-title {
@@ -33,7 +70,6 @@
 	display: flex;
 	flex-direction: column;
 	gap: 0.5rem;
-	min-height: 120px;
 	align-items: center;
 }
 
@@ -90,4 +126,11 @@
 .leaderboard-empty {
 	color: #888;
 	font-style: italic;
+}
+
+.game-title-container {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	margin-top: 130px;
 }

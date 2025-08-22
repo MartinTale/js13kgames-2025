@@ -1,20 +1,30 @@
 import { createButton } from "../button/button";
 import { el } from "../../helpers/dom";
-import { state, addScoreToLeaderboard } from "../../systems/state";
+import { state } from "../../systems/state";
 import { formatNumber } from "../../helpers/format";
 import "./title-screen.css";
 
 export const titleScreen = (startGameCallback: () => void) => {
 	const screen = el("div.title-screen");
 
-	const gameTitle = el("div.game-title", "Shadow Cats");
-	screen.appendChild(gameTitle);
+	const gameTitleContainer = el("div.game-title-container");
+
+	const gameTitle = el("div.game-title", "Meow Madness");
+	gameTitleContainer.appendChild(gameTitle);
+
+	const gameSubtitle = el("div.game-subtitle", "Pet the purrs, dodge the hiss!");
+	gameTitleContainer.appendChild(gameSubtitle);
+
+	const startGameButton = createButton("Play", startGameCallback, "primary");
+	gameTitleContainer.appendChild(startGameButton);
+
+	screen.appendChild(gameTitleContainer);
 
 	// Create leaderboard only if there are scores
 	const scores = state.leaderboard.value;
 
+	const leaderboardContainer = el("div.leaderboard");
 	if (scores.length > 0) {
-		const leaderboardContainer = el("div.leaderboard");
 		const leaderboardTitle = el("h3.leaderboard-title", "Top Scores");
 		leaderboardContainer.appendChild(leaderboardTitle);
 
@@ -40,11 +50,8 @@ export const titleScreen = (startGameCallback: () => void) => {
 		});
 
 		leaderboardContainer.appendChild(leaderboardList);
-		screen.appendChild(leaderboardContainer);
 	}
-
-	const startGameButton = createButton("Play", startGameCallback, "primary");
-	screen.appendChild(startGameButton);
+	screen.appendChild(leaderboardContainer);
 
 	return screen;
 };
