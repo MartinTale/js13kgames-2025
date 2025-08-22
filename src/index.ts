@@ -42,6 +42,7 @@ window.addEventListener("DOMContentLoaded", () => {
 		screen.remove();
 		state.lives.value = state.maxLives.value;
 		state.score.value = 0;
+		state.level.value = 1;
 		initGame();
 		startGameLoop();
 	});

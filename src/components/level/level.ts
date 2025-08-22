@@ -1,6 +1,7 @@
 import { el, mount } from "../../helpers/dom";
 import { state } from "../../systems/state";
 import { tween, easings } from "../../systems/animation";
+import { getDifficultyConfig } from "../../game/game";
 import "./level.css";
 
 export function createLevelContainer(parent: HTMLElement): void {
@@ -11,15 +12,13 @@ export function createLevelContainer(parent: HTMLElement): void {
 
 	let previousLevel = 1;
 
-	const updateDifficulty = (difficultyName: string) => {
-		difficultyValue.textContent = difficultyName;
-	};
-
-	const updateDifficultyColor = (color: string) => {
-		difficultyValue.style.color = color;
-	};
-
 	const updateLevel = (level: number) => {
+		const config = getDifficultyConfig(level);
+		
+		// Update text and color
+		difficultyValue.textContent = config.name;
+		difficultyValue.style.color = config.color;
+		
 		// Add level up animation when level increases
 		if (level > previousLevel) {
 			tween(levelContainer, {
@@ -38,11 +37,8 @@ export function createLevelContainer(parent: HTMLElement): void {
 		previousLevel = level;
 	};
 
-	state.difficultyName.subscribe(updateDifficulty);
-	state.difficultyColor.subscribe(updateDifficultyColor);
 	state.level.subscribe(updateLevel);
-	updateDifficulty(state.difficultyName.value);
-	updateDifficultyColor(state.difficultyColor.value);
+	updateLevel(state.level.value);
 
 	mount(parent, levelContainer);
 }

@@ -37,18 +37,17 @@ function getDifficultySettings() {
 		}
 	}
 
-	// Update level, difficulty name, and color in state
+	// Update level in state
 	if (state.level.value !== difficulty.level) {
 		state.level.value = difficulty.level;
 	}
-	if (state.difficultyName.value !== difficulty.name) {
-		state.difficultyName.value = difficulty.name;
-	}
-	if (state.difficultyColor.value !== difficulty.color) {
-		state.difficultyColor.value = difficulty.color;
-	}
 
 	return difficulty;
+}
+
+// Export function to get difficulty config by level
+export function getDifficultyConfig(level: number) {
+	return DIFFICULTY_THRESHOLDS.find(threshold => threshold.level === level) || DIFFICULTY_THRESHOLDS[0];
 }
 
 const catEyePositions: { x: number; y: number; id: string; spawnTime: number; type: "evil" | "heart" | "dead" }[] = [];
