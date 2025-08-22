@@ -1,0 +1,19 @@
+.level-container {
+	position: absolute;
+	top: 1rem;
+	right: 1rem;
+	color: #fff;
+	font-size: 1.5rem;
+	z-index: 40;
+	font-weight: bold;
+	display: flex;
+	align-items: center;
+	gap: 0.25rem;
+}
+
+.difficulty-value {
+	color: #ffd700;
+	font-weight: bold;
+	text-transform: uppercase;
+	letter-spacing: 0.1em;
+}

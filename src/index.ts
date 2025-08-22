@@ -13,6 +13,7 @@ import { createScaleableContainer } from "./components/scaleable-container/scale
 import { createLivesContainer } from "./components/lives/lives";
 import "./components/lives/lives.css";
 import { createScoreContainer } from "./components/score/score";
+import { createLevelContainer } from "./components/level/level";
 import { createGameOverScreen } from "./components/game-over/game-over";
 import { createDebugSoundPanel } from "./components/debug-sound-panel/debug-sound-panel";
 
@@ -31,6 +32,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	mount(bodyElement, gameContainer);
 	createLivesContainer(gameContainer);
 	createScoreContainer(gameContainer);
+	createLevelContainer(gameContainer);
 	createGameOverScreen(gameContainer);
 
 	if (import.meta.env.MODE === "development") {

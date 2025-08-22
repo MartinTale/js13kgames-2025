@@ -13,6 +13,41 @@ let lastSpawn = 0;
 let gameInteractionsDisabled = false;
 let lastLifeTriggeringTime = 0;
 
+// Difficulty progression thresholds
+const DIFFICULTY_THRESHOLDS = [
+	{ score: 0, spawnMin: 1500, spawnMax: 2500, visibilityDuration: 3000, level: 1, name: "Kitten" },
+	{ score: 50, spawnMin: 1200, spawnMax: 2000, visibilityDuration: 2500, level: 2, name: "House Cat" },
+	{ score: 100, spawnMin: 900, spawnMax: 1500, visibilityDuration: 2000, level: 3, name: "Alley Cat" },
+	{ score: 200, spawnMin: 700, spawnMax: 1200, visibilityDuration: 1800, level: 4, name: "Wild Cat" },
+	{ score: 350, spawnMin: 500, spawnMax: 1000, visibilityDuration: 1500, level: 5, name: "Hunter" },
+	{ score: 500, spawnMin: 400, spawnMax: 800, visibilityDuration: 1300, level: 6, name: "Predator" },
+	{ score: 750, spawnMin: 300, spawnMax: 600, visibilityDuration: 1000, level: 7, name: "Nightmare" },
+	{ score: 1000, spawnMin: 200, spawnMax: 400, visibilityDuration: 750, level: 8, name: "Shadow" },
+];
+
+function getDifficultySettings() {
+	const currentScore = state.score.value;
+	let difficulty = DIFFICULTY_THRESHOLDS[0];
+
+	for (const threshold of DIFFICULTY_THRESHOLDS) {
+		if (currentScore >= threshold.score) {
+			difficulty = threshold;
+		} else {
+			break;
+		}
+	}
+
+	// Update level and difficulty name in state
+	if (state.level.value !== difficulty.level) {
+		state.level.value = difficulty.level;
+	}
+	if (state.difficultyName.value !== difficulty.name) {
+		state.difficultyName.value = difficulty.name;
+	}
+
+	return difficulty;
+}
+
 const catEyePositions: { x: number; y: number; id: string; spawnTime: number; type: "evil" | "heart" | "dead" }[] = [];
 const MIN_DISTANCE = 150; // Minimum distance between centers of cat eyes
 const CAT_EYE_SIZE = 100; // Assumed size of the cat eye for collision detection
@@ -162,6 +197,8 @@ function spawnCatEyes(): void {
 
 	mount(gameContainer, catEyes);
 
+	// Use dynamic visibility duration based on difficulty
+	const difficulty = getDifficultySettings();
 	const disappearTimeout = setTimeout(() => {
 		if (catEyeType === "heart") {
 			// Heart eyes do nothing when they timeout (not tapped)
@@ -253,7 +290,7 @@ function spawnCatEyes(): void {
 				},
 			});
 		}
-	}, 2000);
+	}, difficulty.visibilityDuration);
 
 	catEyes.addEventListener("click", () => {
 		if (gameInteractionsDisabled) return;
@@ -426,7 +463,10 @@ function processGameState(): void {
 	if (newProcessingTime - lastSpawn > spawnInterval && !gameInteractionsDisabled) {
 		spawnCatEyes();
 		lastSpawn = newProcessingTime;
-		spawnInterval = mathRandomInteger(500, 2000);
+
+		// Use dynamic spawn intervals based on difficulty
+		const difficulty = getDifficultySettings();
+		spawnInterval = mathRandomInteger(difficulty.spawnMin, difficulty.spawnMax);
 	}
 
 	state.lastProcessedAt.value = newProcessingTime;

@@ -31,8 +31,10 @@ export function createGameOverScreen(parent: HTMLElement): void {
 		// Hide the in-game UI elements
 		const scoreDisplay = parent.querySelector(".score-container") as HTMLElement;
 		const livesDisplay = parent.querySelector(".lives-container") as HTMLElement;
+		const levelDisplay = parent.querySelector(".level-container") as HTMLElement;
 		if (scoreDisplay) scoreDisplay.style.display = "none";
 		if (livesDisplay) livesDisplay.style.display = "none";
+		if (levelDisplay) levelDisplay.style.display = "none";
 
 		gameOverContainer.classList.add("active");
 	};

@@ -15,6 +15,7 @@ export type State = {
 	gameStartedAt: Signal<number>;
 	lastDamageType: Signal<"evil" | "dead" | null>;
 	score: Signal<number>;
+	difficultyName: Signal<string>;
 };
 
 export const emptyState: State = {
@@ -28,6 +29,7 @@ export const emptyState: State = {
 	gameStartedAt: createSignal(0),
 	lastDamageType: createSignal(null),
 	score: createSignal(0),
+	difficultyName: createSignal("Kitten"),
 };
 
 export let state: State;
