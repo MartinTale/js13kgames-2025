@@ -278,6 +278,7 @@ function spawnCatEyes(): void {
 
 				// Change color to normal pink
 				heartEyes.forEach((heart) => {
+					// heart.querySelector("path")!.setAttribute("stroke", "#ff69b4");
 					heart.querySelector("path")!.setAttribute("fill", "#ff69b4");
 				});
 			} else {
