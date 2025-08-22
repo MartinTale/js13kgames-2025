@@ -2,6 +2,7 @@ import { el, mount } from "../../helpers/dom";
 import { state } from "../../systems/state";
 import { getDifficultyConfig } from "../../game/game";
 import { ProgressBar } from "../progress-bar/progress-bar";
+import { formatNumber } from "../../helpers/format";
 import "./level-progress.css";
 
 export function createLevelProgressContainer(parent: HTMLElement): void {
@@ -40,7 +41,7 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 			if (!hasShownMaxLevelScore && currentScore >= 1000) {
 				hasShownMaxLevelScore = true;
 				currentDisplayScore = currentScore;
-				progressText.textContent = currentScore.toString();
+				progressText.textContent = formatNumber(currentScore);
 				return;
 			}
 
@@ -64,19 +65,19 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 					const easedProgress = 1 - Math.pow(1 - progress, 2);
 
 					currentDisplayScore = Math.round(startScore + scoreDiff * easedProgress);
-					progressText.textContent = currentDisplayScore.toString();
+					progressText.textContent = formatNumber(currentDisplayScore);
 
 					if (progress < 1) {
 						requestAnimationFrame(animateScore);
 					} else {
 						currentDisplayScore = currentScore;
-						progressText.textContent = currentScore.toString();
+						progressText.textContent = formatNumber(currentScore);
 					}
 				};
 
 				requestAnimationFrame(animateScore);
 			} else {
-				progressText.textContent = currentScore.toString();
+				progressText.textContent = formatNumber(currentScore);
 			}
 			return;
 		}
@@ -103,13 +104,13 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 		const scoreNeeded = nextThreshold.score - currentScore;
 		if (scoreNeeded > 0) {
 			const nextLevelConfig = getDifficultyConfig(currentLevel + 1);
-			progressText.textContent = `${scoreNeeded} to ${nextLevelConfig.name}`;
+			progressText.textContent = `${formatNumber(scoreNeeded)} to ${nextLevelConfig.name}`;
 		} else {
 			// Only show "Level Up!" if we're not at max level
 			if (currentLevel < maxLevel) {
 				progressText.textContent = "Level Up!";
 			} else {
-				progressText.textContent = currentScore.toString();
+				progressText.textContent = formatNumber(currentScore);
 			}
 		}
 	};

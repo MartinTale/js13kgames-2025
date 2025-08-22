@@ -68,7 +68,7 @@ const DIFFICULTY_THRESHOLDS = [
 		name: "Nightmare",
 		color: "#DC143C",
 	}, // Crimson
-	{ score: 1000, spawnMin: 200, spawnMax: 400, visibilityDuration: 750, level: 8, name: "Shadow", color: "#8B0000" }, // Dark Red
+	{ score: 1000, spawnMin: 250, spawnMax: 400, visibilityDuration: 750, level: 8, name: "Shadow", color: "#8B0000" }, // Dark Red
 ];
 
 function getDifficultySettings() {

@@ -2,7 +2,7 @@ import "./reset.css";
 import "./defaults.css";
 import { initMusic } from "./systems/music";
 import { mount } from "./helpers/dom";
-import { initState, resetState, state } from "./systems/state";
+import { initState, resetState, state, addScoreToLeaderboard } from "./systems/state";
 import { SVGs } from "./systems/svgs";
 import { initFireflies } from "./components/fireflies/fireflies";
 import { EdgeLinkButton, EdgeButton } from "./components/edge-button/edge-button";
@@ -123,6 +123,20 @@ window.addEventListener("DOMContentLoaded", () => {
 			-8,
 			() => {
 				state.score.value += 25;
+			},
+		);
+
+		// Debug button to add random score to leaderboard
+		new EdgeLinkButton(
+			bodyElement,
+			`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>`,
+			"#ff6b35",
+			-200,
+			-8,
+			() => {
+				const randomScore = Math.floor(Math.random() * (1500 - 10 + 1)) + 10;
+				addScoreToLeaderboard(randomScore);
+				window.location.reload();
 			},
 		);
 	}

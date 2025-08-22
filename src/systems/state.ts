@@ -15,6 +15,7 @@ export type State = {
 	gameStartedAt: Signal<number>;
 	lastDamageType: Signal<"evil" | "dead" | null>;
 	score: Signal<number>;
+	leaderboard: Signal<number[]>;
 };
 
 export const emptyState: State = {
@@ -28,6 +29,7 @@ export const emptyState: State = {
 	gameStartedAt: createSignal(0),
 	lastDamageType: createSignal(null),
 	score: createSignal(0),
+	leaderboard: createSignal([]),
 };
 
 export let state: State;
@@ -67,6 +69,13 @@ function loadState() {
 	rng.setSeed(state.seed.value);
 
 	stateLoaded = true;
+}
+
+export function addScoreToLeaderboard(score: number) {
+	const currentLeaderboard = [...state.leaderboard.value];
+	currentLeaderboard.push(score);
+	currentLeaderboard.sort((a, b) => b - a); // Sort descending
+	state.leaderboard.value = currentLeaderboard.slice(0, 5); // Keep top 5
 }
 
 function saveState() {

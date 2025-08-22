@@ -1,6 +1,7 @@
 import { el, mount } from "../../helpers/dom";
-import { state } from "../../systems/state";
+import { state, addScoreToLeaderboard } from "../../systems/state";
 import { createButton } from "../button/button";
+import { formatNumber } from "../../helpers/format";
 import "./game-over.css";
 
 let gameOverTrigger: (() => void) | null = null;
@@ -25,7 +26,11 @@ export function createGameOverScreen(parent: HTMLElement): void {
 
 	gameOverTrigger = () => {
 		const survivalTime = (Date.now() - state.gameStartedAt.value) / 1000;
-		scoreElement.innerHTML = `🏆&nbsp;<span style='font-weight: bold; color: #ffd700;'>${state.score.value}</span>`;
+		
+		// Add score to leaderboard
+		addScoreToLeaderboard(state.score.value);
+		
+		scoreElement.innerHTML = `🏆&nbsp;<span style='font-weight: bold; color: #ffd700;'>${formatNumber(state.score.value)}</span>`;
 		survivalTimeElement.innerHTML = `⏱️&nbsp;<span style='font-weight: bold;'>${survivalTime.toFixed(2)}s</span>`;
 
 		// Hide the in-game UI elements
