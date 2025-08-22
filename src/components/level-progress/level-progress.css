@@ -1,0 +1,35 @@
+.level-progress-container {
+	position: absolute;
+	top: 2rem;
+	left: 0;
+	right: 0;
+	z-index: 30;
+	padding: 1rem;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.level-progress-container .progress-bar {
+	width: 80%;
+	height: 8px;
+	background-color: rgba(0, 0, 0, 0.3);
+	border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.level-progress-container .progress {
+	height: 6px;
+	transition:
+		width 0.3s ease-out,
+		background-color 0.3s ease-out;
+}
+
+.level-progress-text {
+	color: #fff;
+	font-size: 0.9rem;
+	text-align: center;
+	opacity: 0.8;
+	text-transform: uppercase;
+	letter-spacing: 0.05em;
+}

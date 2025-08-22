@@ -16,12 +16,52 @@ let lastLifeTriggeringTime = 0;
 // Difficulty progression thresholds
 const DIFFICULTY_THRESHOLDS = [
 	{ score: 0, spawnMin: 1500, spawnMax: 2500, visibilityDuration: 3000, level: 1, name: "Kitten", color: "#87CEEB" }, // Sky Blue
-	{ score: 50, spawnMin: 1200, spawnMax: 2000, visibilityDuration: 2500, level: 2, name: "House Cat", color: "#98FB98" }, // Pale Green
-	{ score: 100, spawnMin: 900, spawnMax: 1500, visibilityDuration: 2000, level: 3, name: "Alley Cat", color: "#F0E68C" }, // Khaki
-	{ score: 200, spawnMin: 700, spawnMax: 1200, visibilityDuration: 1800, level: 4, name: "Wild Cat", color: "#DDA0DD" }, // Plum
+	{
+		score: 50,
+		spawnMin: 1200,
+		spawnMax: 2000,
+		visibilityDuration: 2500,
+		level: 2,
+		name: "House Cat",
+		color: "#98FB98",
+	}, // Pale Green
+	{
+		score: 100,
+		spawnMin: 900,
+		spawnMax: 1500,
+		visibilityDuration: 2000,
+		level: 3,
+		name: "Alley Cat",
+		color: "#F0E68C",
+	}, // Khaki
+	{
+		score: 200,
+		spawnMin: 700,
+		spawnMax: 1200,
+		visibilityDuration: 1800,
+		level: 4,
+		name: "Wild Cat",
+		color: "#DDA0DD",
+	}, // Plum
 	{ score: 350, spawnMin: 500, spawnMax: 1000, visibilityDuration: 1500, level: 5, name: "Hunter", color: "#FFA500" }, // Orange
-	{ score: 500, spawnMin: 400, spawnMax: 800, visibilityDuration: 1300, level: 6, name: "Predator", color: "#FF6347" }, // Tomato
-	{ score: 750, spawnMin: 300, spawnMax: 600, visibilityDuration: 1000, level: 7, name: "Nightmare", color: "#DC143C" }, // Crimson
+	{
+		score: 500,
+		spawnMin: 400,
+		spawnMax: 800,
+		visibilityDuration: 1300,
+		level: 6,
+		name: "Predator",
+		color: "#FF6347",
+	}, // Tomato
+	{
+		score: 750,
+		spawnMin: 300,
+		spawnMax: 600,
+		visibilityDuration: 1000,
+		level: 7,
+		name: "Nightmare",
+		color: "#DC143C",
+	}, // Crimson
 	{ score: 1000, spawnMin: 200, spawnMax: 400, visibilityDuration: 750, level: 8, name: "Shadow", color: "#8B0000" }, // Dark Red
 ];
 
@@ -47,7 +87,7 @@ function getDifficultySettings() {
 
 // Export function to get difficulty config by level
 export function getDifficultyConfig(level: number) {
-	return DIFFICULTY_THRESHOLDS.find(threshold => threshold.level === level) || DIFFICULTY_THRESHOLDS[0];
+	return DIFFICULTY_THRESHOLDS.find((threshold) => threshold.level === level) || DIFFICULTY_THRESHOLDS[0];
 }
 
 const catEyePositions: { x: number; y: number; id: string; spawnTime: number; type: "evil" | "heart" | "dead" }[] = [];

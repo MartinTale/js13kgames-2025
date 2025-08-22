@@ -32,9 +32,11 @@ export function createGameOverScreen(parent: HTMLElement): void {
 		const scoreDisplay = parent.querySelector(".score-container") as HTMLElement;
 		const livesDisplay = parent.querySelector(".lives-container") as HTMLElement;
 		const levelDisplay = parent.querySelector(".level-container") as HTMLElement;
+		const progressDisplay = parent.querySelector(".level-progress-container") as HTMLElement;
 		if (scoreDisplay) scoreDisplay.style.display = "none";
 		if (livesDisplay) livesDisplay.style.display = "none";
 		if (levelDisplay) levelDisplay.style.display = "none";
+		if (progressDisplay) progressDisplay.style.display = "none";
 
 		gameOverContainer.classList.add("active");
 	};

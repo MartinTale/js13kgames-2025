@@ -14,6 +14,7 @@ import { createLivesContainer } from "./components/lives/lives";
 import "./components/lives/lives.css";
 import { createScoreContainer } from "./components/score/score";
 import { createLevelContainer } from "./components/level/level";
+import { createLevelProgressContainer } from "./components/level-progress/level-progress";
 import { createGameOverScreen } from "./components/game-over/game-over";
 import { createDebugSoundPanel } from "./components/debug-sound-panel/debug-sound-panel";
 
@@ -33,6 +34,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	createLivesContainer(gameContainer);
 	createScoreContainer(gameContainer);
 	createLevelContainer(gameContainer);
+	createLevelProgressContainer(gameContainer);
 	createGameOverScreen(gameContainer);
 
 	if (import.meta.env.MODE === "development") {
