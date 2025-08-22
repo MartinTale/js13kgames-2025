@@ -15,6 +15,10 @@ export function createLevelContainer(parent: HTMLElement): void {
 		difficultyValue.textContent = difficultyName;
 	};
 
+	const updateDifficultyColor = (color: string) => {
+		difficultyValue.style.color = color;
+	};
+
 	const updateLevel = (level: number) => {
 		// Add level up animation when level increases
 		if (level > previousLevel) {
@@ -35,8 +39,10 @@ export function createLevelContainer(parent: HTMLElement): void {
 	};
 
 	state.difficultyName.subscribe(updateDifficulty);
+	state.difficultyColor.subscribe(updateDifficultyColor);
 	state.level.subscribe(updateLevel);
 	updateDifficulty(state.difficultyName.value);
+	updateDifficultyColor(state.difficultyColor.value);
 
 	mount(parent, levelContainer);
 }

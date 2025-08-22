@@ -16,6 +16,7 @@ export type State = {
 	lastDamageType: Signal<"evil" | "dead" | null>;
 	score: Signal<number>;
 	difficultyName: Signal<string>;
+	difficultyColor: Signal<string>;
 };
 
 export const emptyState: State = {
@@ -30,6 +31,7 @@ export const emptyState: State = {
 	lastDamageType: createSignal(null),
 	score: createSignal(0),
 	difficultyName: createSignal("Kitten"),
+	difficultyColor: createSignal("#87CEEB"),
 };
 
 export let state: State;
