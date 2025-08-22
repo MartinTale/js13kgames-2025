@@ -13,6 +13,7 @@ let lastSpawn = 0;
 let gameInteractionsDisabled = false;
 let lastLifeTriggeringTime = 0;
 let debugMode = false;
+let difficultyUpdateTimeout: number | null = null;
 
 // Difficulty progression thresholds
 const DIFFICULTY_THRESHOLDS = [
@@ -104,6 +105,21 @@ export function setDebugMode(enabled: boolean): void {
 
 export function startGameLoop(): void {
 	state.gameStartedAt.value = Date.now();
+
+	// Subscribe to score changes to update difficulty with delay
+	state.score.subscribe(() => {
+		// Only start a new timeout if there isn't one already running
+		if (difficultyUpdateTimeout === null) {
+			difficultyUpdateTimeout = setTimeout(() => {
+				getDifficultySettings();
+				difficultyUpdateTimeout = null;
+			}, 300);
+		}
+	});
+
+	// Set initial difficulty
+	getDifficultySettings();
+
 	processGameState();
 }
 
