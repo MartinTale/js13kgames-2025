@@ -6,7 +6,7 @@ import { initState, resetState, state } from "./systems/state";
 import { SVGs } from "./systems/svgs";
 import { initFireflies } from "./components/fireflies/fireflies";
 import { EdgeLinkButton, EdgeButton } from "./components/edge-button/edge-button";
-import { initGame, startGameLoop } from "./game/game";
+import { initGame, startGameLoop, setDebugMode } from "./game/game";
 import { closeModal, openModal } from "./components/modal/modal";
 import { titleScreen } from "./components/title-screen/title-screen";
 import { createScaleableContainer } from "./components/scaleable-container/scaleable-container";
@@ -95,6 +95,35 @@ window.addEventListener("DOMContentLoaded", () => {
 					],
 					null,
 				);
+			},
+		);
+
+		// Debug button to start game without spawning eyes
+		new EdgeLinkButton(
+			bodyElement,
+			`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9 2l1.09 3.26.86 1.38.76 1.58 1.06 1.07L15 10l-1.5 1.5L9 15l-.5-4 1.5-1L8 8l-2.5 1.5L6 15l-4-2L4 9.5 2 8.5 4 6 2 4l4-2z"/></svg>`,
+			"#00ff00",
+			-72,
+			-8,
+			() => {
+				setDebugMode(true);
+				state.lives.value = state.maxLives.value;
+				state.score.value = 0;
+				state.level.value = 1;
+				initGame();
+				startGameLoop();
+			},
+		);
+
+		// Debug button to add 25 points to score
+		new EdgeLinkButton(
+			bodyElement,
+			`<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg>`,
+			"#ffd700",
+			-136,
+			-8,
+			() => {
+				state.score.value += 25;
 			},
 		);
 	}

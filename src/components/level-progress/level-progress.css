@@ -13,9 +13,10 @@
 
 .level-progress-container .progress-bar {
 	width: 80%;
-	height: 8px;
+	height: 12px;
 	background-color: rgba(0, 0, 0, 0.3);
 	border: 1px solid rgba(255, 255, 255, 0.2);
+	border-radius: 6px;
 }
 
 .level-progress-container .progress {
@@ -23,6 +24,7 @@
 	transition:
 		width 0.3s ease-out,
 		background-color 0.3s ease-out;
+	border-radius: 4px;
 }
 
 .level-progress-text {

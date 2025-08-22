@@ -12,6 +12,7 @@ let spawnInterval = 2000;
 let lastSpawn = 0;
 let gameInteractionsDisabled = false;
 let lastLifeTriggeringTime = 0;
+let debugMode = false;
 
 // Difficulty progression thresholds
 const DIFFICULTY_THRESHOLDS = [
@@ -96,6 +97,10 @@ const CAT_EYE_SIZE = 100; // Assumed size of the cat eye for collision detection
 const Y_OFFSET = 70;
 
 export function initGame(): void {}
+
+export function setDebugMode(enabled: boolean): void {
+	debugMode = enabled;
+}
 
 export function startGameLoop(): void {
 	state.gameStartedAt.value = Date.now();
@@ -502,7 +507,7 @@ function processGameState(): void {
 
 	Object.values(tweens).forEach((updateTween) => updateTween(newProcessingTime));
 
-	if (newProcessingTime - lastSpawn > spawnInterval && !gameInteractionsDisabled) {
+	if (newProcessingTime - lastSpawn > spawnInterval && !gameInteractionsDisabled && !debugMode) {
 		spawnCatEyes();
 		lastSpawn = newProcessingTime;
 
