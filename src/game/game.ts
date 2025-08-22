@@ -70,7 +70,7 @@ function spawnCatEyes(): void {
 		}
 
 		clampedX = clamp(x, CAT_EYE_SIZE / 2, clientWidth - CAT_EYE_SIZE / 2);
-		clampedY = clamp(y, Y_OFFSET + CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2 - Y_OFFSET);
+		clampedY = clamp(y, Y_OFFSET * 2 + CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2 - Y_OFFSET);
 
 		let collision = false;
 		for (const existingCatEye of catEyePositions) {
@@ -110,11 +110,11 @@ function spawnCatEyes(): void {
 		const rightHeart = svgEl(SVGs.hearts, "transparent");
 
 		leftHeart.querySelector("path")!.setAttribute("fill", "none");
-		leftHeart.querySelector("path")!.setAttribute("stroke", "#ff69b4");
+		leftHeart.querySelector("path")!.setAttribute("stroke", "#fff"); // "#ff69b4");
 		leftHeart.querySelector("path")!.setAttribute("stroke-width", "32");
 
 		rightHeart.querySelector("path")!.setAttribute("fill", "none");
-		rightHeart.querySelector("path")!.setAttribute("stroke", "#ff69b4");
+		rightHeart.querySelector("path")!.setAttribute("stroke", "#fff"); // "#ff69b4");
 		rightHeart.querySelector("path")!.setAttribute("stroke-width", "32");
 
 		leftHeart.style.position = "absolute";
@@ -133,8 +133,8 @@ function spawnCatEyes(): void {
 		mount(catEyes, rightHeart);
 	} else if (catEyeType === "dead") {
 		// Create two X-shaped dead eyes
-		const leftX = svgEl(SVGs.x, "#999");
-		const rightX = svgEl(SVGs.x, "#999");
+		const leftX = svgEl(SVGs.x, "#fff"); // "#999");
+		const rightX = svgEl(SVGs.x, "#fff"); // "#999");
 
 		leftX.style.position = "absolute";
 		leftX.style.width = "20px";
@@ -152,6 +152,7 @@ function spawnCatEyes(): void {
 		mount(catEyes, rightX);
 	} else {
 		const catEyesSvg = svgEl(SVGs.evilEyes, "#fff");
+
 		mount(catEyes, catEyesSvg);
 	}
 
@@ -235,7 +236,7 @@ function spawnCatEyes(): void {
 					scale: 2,
 					rotate: rotation > 0 ? mathRandomInteger(-15, -5) : mathRandomInteger(5, 15),
 					x: clamp(clampedX, CAT_EYE_SIZE / 2, clientWidth - CAT_EYE_SIZE / 2),
-					y: clamp(clampedY, Y_OFFSET + CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2 - Y_OFFSET),
+					y: clamp(clampedY, Y_OFFSET * 2 + CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2 - Y_OFFSET),
 				},
 				duration: 300,
 				easing: easings.swingTo,
@@ -285,7 +286,7 @@ function spawnCatEyes(): void {
 
 				// Change color to gold for bonus points
 				heartEyes.forEach((heart) => {
-					heart.querySelector("path")!.setAttribute("stroke", "#ffd700");
+					// heart.querySelector("path")!.setAttribute("stroke", "#ffd700");
 					heart.querySelector("path")!.setAttribute("fill", "#ffd700");
 				});
 			}
@@ -295,7 +296,7 @@ function spawnCatEyes(): void {
 					scale: 1.5,
 					rotate: rotation > 0 ? mathRandomInteger(-10, -5) : mathRandomInteger(5, 10),
 					x: clamp(clampedX, CAT_EYE_SIZE / 2, clientWidth - CAT_EYE_SIZE / 2),
-					y: clamp(clampedY, Y_OFFSET + CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2 - Y_OFFSET),
+					y: clamp(clampedY, Y_OFFSET * 2 + CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2 - Y_OFFSET),
 				},
 				duration: 1000,
 				easing: easings.elastic,
@@ -330,7 +331,7 @@ function spawnCatEyes(): void {
 					scale: 2,
 					rotate: rotation > 0 ? mathRandomInteger(-15, -5) : mathRandomInteger(5, 15),
 					x: clamp(clampedX, CAT_EYE_SIZE / 2, clientWidth - CAT_EYE_SIZE / 2),
-					y: clamp(clampedY, Y_OFFSET + CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2 - Y_OFFSET),
+					y: clamp(clampedY, Y_OFFSET * 2 + CAT_EYE_SIZE / 2, clientHeight - CAT_EYE_SIZE / 2 - Y_OFFSET),
 				},
 				duration: 300,
 				easing: easings.swingTo,
