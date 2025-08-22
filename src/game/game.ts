@@ -113,7 +113,7 @@ export function startGameLoop(): void {
 			difficultyUpdateTimeout = setTimeout(() => {
 				getDifficultySettings();
 				difficultyUpdateTimeout = null;
-			}, 300);
+			}, 500);
 		}
 	});
 
