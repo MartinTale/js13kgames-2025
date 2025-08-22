@@ -13,6 +13,7 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 	mount(progressContainer, progressText);
 
 	let currentDisplayScore = 0;
+	let hasShownMaxLevelScore = false;
 
 	// Get all difficulty thresholds
 	const DIFFICULTY_THRESHOLDS = [
@@ -34,6 +35,18 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 		if (currentLevel >= maxLevel) {
 			// At max level - animate score counting
 			progressBar.setValue(100);
+
+			// First time showing max level score - no animation
+			if (!hasShownMaxLevelScore && currentScore >= 1000) {
+				hasShownMaxLevelScore = true;
+				currentDisplayScore = currentScore;
+				progressText.textContent = currentScore.toString();
+				return;
+			}
+
+			if (hasShownMaxLevelScore === false) {
+				return;
+			}
 
 			// Always update to the latest score - no animation blocking for rapid updates
 			if (currentDisplayScore !== currentScore) {

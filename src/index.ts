@@ -28,6 +28,10 @@ window.addEventListener("DOMContentLoaded", () => {
 	initState();
 	initFireflies();
 
+	state.lives.value = state.maxLives.value;
+	state.score.value = 0;
+	state.level.value = 1;
+
 	gameContainer = createScaleableContainer(bodyElement, 360, 780, "bottom", "game");
 	mount(bodyElement, gameContainer);
 	createLivesContainer(gameContainer);
@@ -40,9 +44,6 @@ window.addEventListener("DOMContentLoaded", () => {
 	}
 	const screen = titleScreen(() => {
 		screen.remove();
-		state.lives.value = state.maxLives.value;
-		state.score.value = 0;
-		state.level.value = 1;
 		initGame();
 		startGameLoop();
 	});
