@@ -12,7 +12,6 @@ import { titleScreen } from "./components/title-screen/title-screen";
 import { createScaleableContainer } from "./components/scaleable-container/scaleable-container";
 import { createLivesContainer } from "./components/lives/lives";
 import "./components/lives/lives.css";
-import { createScoreContainer } from "./components/score/score";
 import { createLevelContainer } from "./components/level/level";
 import { createLevelProgressContainer } from "./components/level-progress/level-progress";
 import { createGameOverScreen } from "./components/game-over/game-over";
@@ -32,7 +31,6 @@ window.addEventListener("DOMContentLoaded", () => {
 	gameContainer = createScaleableContainer(bodyElement, 360, 780, "bottom", "game");
 	mount(bodyElement, gameContainer);
 	createLivesContainer(gameContainer);
-	createScoreContainer(gameContainer);
 	createLevelContainer(gameContainer);
 	createLevelProgressContainer(gameContainer);
 	createGameOverScreen(gameContainer);

@@ -36,8 +36,9 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 			// At max level - animate score counting
 			progressBar.setValue(100);
 
-			// Animate score counting if not already animating
-			if (!isAnimating && currentDisplayScore !== currentScore) {
+			// Always update to the latest score - no animation blocking for rapid updates
+			if (currentDisplayScore !== currentScore) {
+				// If already animating, stop current animation and start new one with current display score as base
 				isAnimating = true;
 				const startScore = currentDisplayScore;
 				const scoreDiff = currentScore - startScore;
@@ -64,7 +65,7 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 				};
 
 				requestAnimationFrame(animateScore);
-			} else if (currentDisplayScore === currentScore) {
+			} else {
 				progressText.textContent = currentScore.toString();
 			}
 			return;
