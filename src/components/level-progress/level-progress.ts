@@ -13,7 +13,6 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 	mount(progressContainer, progressText);
 
 	let currentDisplayScore = 0;
-	let isAnimating = false;
 
 	// Get all difficulty thresholds
 	const DIFFICULTY_THRESHOLDS = [
@@ -39,7 +38,6 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 			// Always update to the latest score - no animation blocking for rapid updates
 			if (currentDisplayScore !== currentScore) {
 				// If already animating, stop current animation and start new one with current display score as base
-				isAnimating = true;
 				const startScore = currentDisplayScore;
 				const scoreDiff = currentScore - startScore;
 				const duration = Math.min(500, Math.abs(scoreDiff) * 30);
@@ -60,7 +58,6 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 					} else {
 						currentDisplayScore = currentScore;
 						progressText.textContent = currentScore.toString();
-						isAnimating = false;
 					}
 				};
 
@@ -91,8 +88,17 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 
 		// Update text
 		const scoreNeeded = nextThreshold.score - currentScore;
-		const nextLevelConfig = getDifficultyConfig(currentLevel + 1);
-		progressText.textContent = scoreNeeded > 0 ? `${scoreNeeded} to ${nextLevelConfig.name}` : "Level Up!";
+		if (scoreNeeded > 0) {
+			const nextLevelConfig = getDifficultyConfig(currentLevel + 1);
+			progressText.textContent = `${scoreNeeded} to ${nextLevelConfig.name}`;
+		} else {
+			// Only show "Level Up!" if we're not at max level
+			if (currentLevel < maxLevel) {
+				progressText.textContent = "Level Up!";
+			} else {
+				progressText.textContent = currentScore.toString();
+			}
+		}
 	};
 
 	state.score.subscribe(updateProgress);
