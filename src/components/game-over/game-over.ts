@@ -10,9 +10,9 @@ export function createGameOverScreen(parent: HTMLElement): void {
 	const gameOverContainer = el("div.game-over-container");
 	const gameOverText = el("h1", "Game Over");
 	const scoreElement = el("p.final-score");
-	const survivalTimeElement = el("p.survival-time");
+	const subtitleElement = el("p.subtitle", "points");
 	const restartButton = createButton(
-		"Restart",
+		"Back",
 		() => {
 			window.location.reload();
 		},
@@ -21,17 +21,16 @@ export function createGameOverScreen(parent: HTMLElement): void {
 
 	mount(gameOverContainer, gameOverText);
 	mount(gameOverContainer, scoreElement);
-	mount(gameOverContainer, survivalTimeElement);
+	mount(gameOverContainer, subtitleElement);
 	mount(gameOverContainer, restartButton);
 
 	gameOverTrigger = () => {
-		const survivalTime = (Date.now() - state.gameStartedAt.value) / 1000;
-		
 		// Add score to leaderboard
 		addScoreToLeaderboard(state.score.value);
-		
-		scoreElement.innerHTML = `🏆&nbsp;<span style='font-weight: bold; color: #ffd700;'>${formatNumber(state.score.value)}</span>`;
-		survivalTimeElement.innerHTML = `⏱️&nbsp;<span style='font-weight: bold;'>${survivalTime.toFixed(2)}s</span>`;
+
+		scoreElement.innerHTML = `<span style='font-weight: bold; color: #ffd700;'>${formatNumber(
+			state.score.value,
+		)}</span>`;
 
 		// Hide the in-game UI elements
 		const scoreDisplay = parent.querySelector(".score-container") as HTMLElement;

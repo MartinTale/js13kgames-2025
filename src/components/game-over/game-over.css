@@ -28,10 +28,12 @@
 
 .game-over-container .final-score {
 	font-size: 3rem;
-	margin-bottom: 1rem;
+	margin-bottom: 0;
 }
 
-.game-over-container .survival-time {
-	font-size: 2rem;
-	margin-bottom: 2rem;
+.game-over-container .subtitle {
+	font-size: 1.2rem;
+	color: #ccc;
+	font-style: italic;
+	margin-bottom: 3rem;
 }
