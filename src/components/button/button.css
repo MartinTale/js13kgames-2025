@@ -63,32 +63,32 @@ button.normal {
 
 button.primary {
 	--color: #fff;
-	--bg-start: #ff6b35;
-	--bg-end: #f7931e;
+	--bg-start: #8b9dc3;
+	--bg-end: #6c7b95;
 	animation: primaryPulse 2s ease-in-out infinite;
 }
 
 button.danger {
 	--color: #fff;
-	--bg-start: #dc3545;
-	--bg-end: #c82333;
+	--bg-start: #95736c;
+	--bg-end: #7a5f59;
 }
 
 button.primary:hover {
-	background: linear-gradient(45deg, #f7931e, #ffd700);
-	box-shadow: 0 6px 25px rgba(255, 107, 53, 0.5);
+	background: linear-gradient(45deg, #6c7b95, #a8b5d1);
+	box-shadow: 0 6px 25px rgba(139, 157, 195, 0.5);
 }
 
 button.danger:hover {
-	background: linear-gradient(45deg, #c82333, #dc3545);
-	box-shadow: 0 6px 25px rgba(220, 53, 69, 0.5);
+	background: linear-gradient(45deg, #7a5f59, #95736c);
+	box-shadow: 0 6px 25px rgba(149, 115, 108, 0.5);
 }
 
 @keyframes primaryPulse {
 	0%, 100% {
-		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(255, 107, 53, 0.4);
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(139, 157, 195, 0.4);
 	}
 	50% {
-		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 8px rgba(255, 107, 53, 0);
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 8px rgba(139, 157, 195, 0);
 	}
 }
