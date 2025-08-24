@@ -30,13 +30,15 @@ function getCongratulationMessage(score: number): string {
 	if (score >= 100) return "GREAT JOB!";
 	if (score >= 50) return "WELL DONE!";
 	if (score >= 25) return "NICE!";
-	return "GOOD TRY!";
+	if (score > 0) return "GOOD TRY!";
+	return "TRY AGAIN!";
 }
 
 export function createGameOverScreen(parent: HTMLElement): void {
 	const gameOverContainer = el("div.game-over-container");
 	const scoreElement = el("p.final-score");
 	const subtitleElement = el("p.subtitle", "points");
+	const instructionElement = el("p.instruction", "");
 	const restartButton = el("button.difficulty-button", "PLAY AGAIN") as HTMLButtonElement;
 	restartButton.onclick = () => {
 		window.location.reload();
@@ -44,6 +46,7 @@ export function createGameOverScreen(parent: HTMLElement): void {
 
 	mount(gameOverContainer, scoreElement);
 	mount(gameOverContainer, subtitleElement);
+	mount(gameOverContainer, instructionElement);
 	mount(gameOverContainer, restartButton);
 
 	gameOverTrigger = () => {
@@ -54,13 +57,21 @@ export function createGameOverScreen(parent: HTMLElement): void {
 		// Add score to leaderboard
 		addScoreToLeaderboard(finalScore);
 
-		// Set score display
-		scoreElement.innerHTML = `<span style='font-weight: bold; color: ${difficultyConfig.color};'>${formatNumber(
-			finalScore,
-		)}</span>`;
-
-		// Update subtitle to show difficulty name
-		subtitleElement.innerHTML = `<span style="color: ${difficultyConfig.color};">points</span>`;
+		// Update subtitle to show difficulty name or instructional text
+		if (finalScore === 0) {
+			// Set score display
+			scoreElement.innerHTML = ``;
+			subtitleElement.innerHTML = ``;
+			instructionElement.innerHTML = `<span style="color: #ccc; font-size: 1rem;">Tap the cat eyes to score points!</span>`;
+			instructionElement.style.display = "block";
+		} else {
+			// Set score display
+			scoreElement.innerHTML = `<span style='font-weight: bold; color: ${difficultyConfig.color};'>${formatNumber(
+				finalScore,
+			)}</span>`;
+			subtitleElement.innerHTML = `<span style="color: ${difficultyConfig.color};">points</span>`;
+			instructionElement.style.display = "none";
+		}
 
 		// Update button text to show congratulation message and style with difficulty color
 		restartButton.textContent = getCongratulationMessage(finalScore);

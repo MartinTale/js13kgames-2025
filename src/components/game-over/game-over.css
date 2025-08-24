@@ -35,7 +35,15 @@
 	font-size: 1.2rem;
 	color: #ccc;
 	font-style: italic;
-	margin-bottom: 3rem;
+	margin-bottom: 1rem;
+}
+
+.game-over-container .instruction {
+	font-size: 1rem;
+	color: #ccc;
+	font-style: italic;
+	margin-bottom: 2rem;
+	display: none;
 }
 
 .difficulty-button {
