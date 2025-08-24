@@ -14,7 +14,9 @@ export function createLivesContainer(parent: HTMLElement): void {
 		heartContainer.style.position = "relative";
 		heartContainer.style.display = "inline-block";
 
-		const heartIcon = svgEl(SVGs.hearts, "#a81f1fff");
+		const heartIcon = svgEl(SVGs.hearts, "#c45a5a");
+		// Add staggered animation delay
+		heartIcon.style.animationDelay = `${i * 0.75}s`;
 		mount(heartContainer, heartIcon);
 		hearts.push(heartIcon);
 		mount(livesContainer, heartContainer);
@@ -50,7 +52,7 @@ export function createLivesContainer(parent: HTMLElement): void {
 			overlay = svgEl(SVGs.x, "#666");
 		} else {
 			// Create scratch overlay for evil cat eye damage (default)
-			overlay = svgEl(SVGs.tripleScratches, "#a81f1fff");
+			overlay = svgEl(SVGs.tripleScratches, "#c45a5a");
 		}
 
 		overlay.style.position = "absolute";

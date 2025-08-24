@@ -72,6 +72,11 @@ function loadState() {
 }
 
 export function addScoreToLeaderboard(score: number) {
+	// Don't add scores of 0 to the leaderboard
+	if (score === 0) {
+		return;
+	}
+	
 	const currentLeaderboard = [...state.leaderboard.value];
 	currentLeaderboard.push(score);
 	currentLeaderboard.sort((a, b) => b - a); // Sort descending

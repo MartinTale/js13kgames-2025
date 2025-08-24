@@ -15,10 +15,24 @@
 	width: 3rem;
 	height: 3rem;
 	transition: all 250ms ease-in-out;
+	filter: drop-shadow(0 0 8px rgba(196, 90, 90, 0.6)) drop-shadow(0 0 15px rgba(230, 123, 123, 0.3));
+	animation: heartBeat 1.5s ease-in-out infinite;
 }
 
 .lives-container svg.used {
 	transform: scale(0.6);
 	fill: #80808080;
 	stroke: #80808080;
+	filter: drop-shadow(0 0 3px rgba(128, 128, 128, 0.3));
+	animation: none;
+}
+
+@keyframes heartBeat {
+	0%,
+	100% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.1);
+	}
 }
