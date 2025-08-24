@@ -13,7 +13,7 @@ body * {
 	justify-content: center;
 	align-items: center;
 	position: relative;
-	font-family: "Comic Sans MS", Times, serif;
+	font-family: "Comic Sans MS", "Chalkboard SE", "Comic Neue", "Trebuchet MS", Times, serif;
 }
 
 html,
