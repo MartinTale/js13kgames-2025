@@ -22,7 +22,9 @@
 	text-shadow: 2px 2px 8px rgba(139, 157, 195, 0.3);
 	font-weight: bold;
 	letter-spacing: 2px;
-	animation: titleGlow 3s ease-in-out infinite, titleBounce 4s ease-in-out infinite;
+	animation:
+		titleGlow 3s ease-in-out infinite,
+		titleBounce 4s ease-in-out infinite;
 	transform: scale(1);
 	transition: transform 0.3s ease;
 	white-space: nowrap;
@@ -45,7 +47,8 @@
 }
 
 @keyframes titleBounce {
-	0%, 100% {
+	0%,
+	100% {
 		transform: translateY(0) rotate(0deg) scale(1);
 	}
 	25% {
@@ -71,14 +74,15 @@
 	text-align: center;
 	display: flex;
 	flex-direction: column;
-	min-height: 400px;
+	min-height: 200px;
 	justify-content: flex-start;
+	opacity: 0.7;
 }
 
 .leaderboard-title {
-	font-size: 2rem;
-	margin-bottom: 2rem;
-	color: #ffd700;
+	font-size: 1.2rem;
+	margin-bottom: 1rem;
+	color: #999;
 }
 
 .leaderboard-list {
@@ -92,9 +96,10 @@
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	padding: 0.5rem 1rem;
+	padding: 0.3rem 0.8rem;
 	border-radius: 4px;
-	min-width: 180px;
+	min-width: 150px;
+	font-size: 0.9rem;
 }
 
 .leaderboard-item .score {
@@ -103,8 +108,8 @@
 
 /* First place - Gold */
 .leaderboard-item.rank-1 {
-	background: rgba(255, 215, 0, 0.2);
-	font-size: 1.4em;
+	background: rgba(255, 215, 0, 0.1);
+	font-size: 1.1em;
 }
 .leaderboard-item.rank-1 .score {
 	color: #ffd700;
@@ -112,8 +117,8 @@
 
 /* Second place - Silver */
 .leaderboard-item.rank-2 {
-	background: rgba(192, 192, 192, 0.2);
-	font-size: 1.2em;
+	background: rgba(192, 192, 192, 0.1);
+	font-size: 1.05em;
 }
 .leaderboard-item.rank-2 .score {
 	color: #c0c0c0;
@@ -121,8 +126,8 @@
 
 /* Third place - Bronze */
 .leaderboard-item.rank-3 {
-	background: rgba(205, 127, 50, 0.2);
-	font-size: 1.1em;
+	background: rgba(205, 127, 50, 0.1);
+	font-size: 1em;
 }
 .leaderboard-item.rank-3 .score {
 	color: #cd7f32;
@@ -130,9 +135,9 @@
 
 /* Lower ranks - Grey and smaller */
 .leaderboard-item.rank-lower {
-	background: rgba(128, 128, 128, 0.1);
-	font-size: 0.9em;
-	padding: 0.4rem 0.8rem;
+	background: rgba(128, 128, 128, 0.05);
+	font-size: 0.8em;
+	padding: 0.2rem 0.6rem;
 }
 .leaderboard-item.rank-lower .score {
 	color: #888;
