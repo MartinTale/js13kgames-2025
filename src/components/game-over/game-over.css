@@ -35,7 +35,7 @@
 	font-size: 1.2rem;
 	color: #ccc;
 	font-style: italic;
-	margin-bottom: 1rem;
+	margin-bottom: 2rem;
 }
 
 .game-over-container .instruction {
@@ -66,7 +66,7 @@
 }
 
 .difficulty-button::before {
-	content: '';
+	content: "";
 	position: absolute;
 	top: 0;
 	left: -100%;
@@ -91,10 +91,15 @@
 }
 
 @keyframes difficultyPulse {
-	0%, 100% {
-		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 0 var(--difficulty-color, rgba(255, 107, 53, 0.4));
+	0%,
+	100% {
+		box-shadow:
+			0 4px 15px rgba(0, 0, 0, 0.3),
+			0 0 0 0 var(--difficulty-color, rgba(255, 107, 53, 0.4));
 	}
 	50% {
-		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 8px transparent;
+		box-shadow:
+			0 4px 15px rgba(0, 0, 0, 0.3),
+			0 0 0 8px transparent;
 	}
 }
