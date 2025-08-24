@@ -1,11 +1,25 @@
 import { el, mount } from "../../helpers/dom";
 import { state, addScoreToLeaderboard } from "../../systems/state";
-import { createButton } from "../button/button";
 import { formatNumber } from "../../helpers/format";
 import { getDifficultyConfig } from "../../game/game";
 import "./game-over.css";
 
 let gameOverTrigger: (() => void) | null = null;
+
+function adjustColorBrightness(color: string, amount: number): string {
+	const hex = color.replace("#", "");
+	const r = parseInt(hex.substring(0, 2), 16);
+	const g = parseInt(hex.substring(2, 4), 16);
+	const b = parseInt(hex.substring(4, 6), 16);
+
+	const newR = Math.max(0, Math.min(255, r + amount));
+	const newG = Math.max(0, Math.min(255, g + amount));
+	const newB = Math.max(0, Math.min(255, b + amount));
+
+	return `#${newR.toString(16).padStart(2, "0")}${newG.toString(16).padStart(2, "0")}${newB
+		.toString(16)
+		.padStart(2, "0")}`;
+}
 
 function getCongratulationMessage(score: number): string {
 	if (score >= 1000) return "LEGENDARY!";
@@ -23,13 +37,10 @@ export function createGameOverScreen(parent: HTMLElement): void {
 	const gameOverContainer = el("div.game-over-container");
 	const scoreElement = el("p.final-score");
 	const subtitleElement = el("p.subtitle", "points");
-	const restartButton = createButton(
-		"PLAY AGAIN",
-		() => {
-			window.location.reload();
-		},
-		"primary",
-	);
+	const restartButton = el("button.difficulty-button", "PLAY AGAIN") as HTMLButtonElement;
+	restartButton.onclick = () => {
+		window.location.reload();
+	};
 
 	mount(gameOverContainer, scoreElement);
 	mount(gameOverContainer, subtitleElement);
@@ -49,10 +60,15 @@ export function createGameOverScreen(parent: HTMLElement): void {
 		)}</span>`;
 
 		// Update subtitle to show difficulty name
-		subtitleElement.innerHTML = `<span style="color: ${difficultyConfig.color};">${difficultyConfig.name} Points</span>`;
+		subtitleElement.innerHTML = `<span style="color: ${difficultyConfig.color};">points</span>`;
 
-		// Update button text to show congratulation message
+		// Update button text to show congratulation message and style with difficulty color
 		restartButton.textContent = getCongratulationMessage(finalScore);
+
+		// Apply difficulty-based color scheme to the button
+		restartButton.style.setProperty("--difficulty-color", difficultyConfig.color);
+		const darkerColor = adjustColorBrightness(difficultyConfig.color, -20);
+		restartButton.style.setProperty("--difficulty-color-dark", darkerColor);
 
 		// Hide the in-game UI elements
 		const scoreDisplay = parent.querySelector(".score-container") as HTMLElement;
