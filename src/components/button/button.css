@@ -63,8 +63,8 @@ button.normal {
 
 button.primary {
 	--color: #fff;
-	--bg-start: #8b9dc3;
-	--bg-end: #6c7b95;
+	--bg-start: #c45a5a;
+	--bg-end: #b34a4a;
 	animation: primaryPulse 2s ease-in-out infinite;
 }
 
@@ -75,8 +75,8 @@ button.danger {
 }
 
 button.primary:hover {
-	background: linear-gradient(45deg, #6c7b95, #a8b5d1);
-	box-shadow: 0 6px 25px rgba(139, 157, 195, 0.5);
+	background: linear-gradient(45deg, #b34a4a, #e67b7b);
+	box-shadow: 0 6px 25px rgba(196, 90, 90, 0.6);
 }
 
 button.danger:hover {
@@ -86,9 +86,9 @@ button.danger:hover {
 
 @keyframes primaryPulse {
 	0%, 100% {
-		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(139, 157, 195, 0.4);
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 0 rgba(196, 90, 90, 0.5);
 	}
 	50% {
-		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 8px rgba(139, 157, 195, 0);
+		box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3), 0 0 0 8px rgba(196, 90, 90, 0);
 	}
 }
