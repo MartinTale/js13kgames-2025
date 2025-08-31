@@ -1,5 +1,6 @@
 import { el, mount } from "../../helpers/dom";
 import { state } from "../../systems/state";
+import { tween, easings } from "../../systems/animation";
 import { getDifficultyConfig } from "../../game/game";
 import { ProgressBar } from "../progress-bar/progress-bar";
 import { formatNumber } from "../../helpers/format";
@@ -15,6 +16,7 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 
 	let currentDisplayScore = 0;
 	let hasShownMaxLevelScore = false;
+	let previousLevel = 1;
 
 	// Get all difficulty thresholds
 	const DIFFICULTY_THRESHOLDS = [
@@ -32,6 +34,23 @@ export function createLevelProgressContainer(parent: HTMLElement): void {
 		const currentScore = state.score.value;
 		const currentLevel = state.level.value;
 		const maxLevel = DIFFICULTY_THRESHOLDS[DIFFICULTY_THRESHOLDS.length - 1].level;
+
+		// Add level up animation when level increases
+		if (currentLevel > previousLevel) {
+			tween(progressContainer, {
+				to: { y: 4 },
+				duration: 150,
+				easing: easings.easeOutBounce,
+				onComplete: () => {
+					tween(progressContainer, {
+						to: { y: 0 },
+						duration: 150,
+						easing: easings.easeOutBack,
+					});
+				},
+			});
+		}
+		previousLevel = currentLevel;
 
 		if (currentLevel >= maxLevel) {
 			// At max level - animate score counting
