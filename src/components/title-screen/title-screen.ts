@@ -9,10 +9,10 @@ export const titleScreen = (startGameCallback: () => void) => {
 
 	const gameTitleContainer = el("div.game-title-container");
 
-	const gameTitle = el("div.game-title", "Meow Madness");
+	const gameTitle = el("div.game-title", "Kitty Chaos");
 	gameTitleContainer.appendChild(gameTitle);
 
-	const gameSubtitle = el("div.game-subtitle", "Pet the purrs, dodge the hiss!");
+	const gameSubtitle = el("div.game-subtitle", "cuteness with consequences");
 	gameTitleContainer.appendChild(gameSubtitle);
 
 	const startGameButton = createButton("Play", startGameCallback, "primary");
