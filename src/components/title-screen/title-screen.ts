@@ -1,8 +1,7 @@
 import { createButton } from "../button/button";
-import { el, mount, svgEl } from "../../helpers/dom";
+import { el } from "../../helpers/dom";
 import { state } from "../../systems/state";
 import { formatNumber } from "../../helpers/format";
-import { SVGs } from "../../systems/svgs";
 import "./title-screen.css";
 
 export const titleScreen = (startGameCallback: () => void) => {
@@ -53,26 +52,6 @@ export const titleScreen = (startGameCallback: () => void) => {
 		leaderboardContainer.appendChild(leaderboardList);
 	}
 	screen.appendChild(leaderboardContainer);
-
-	// Add decorative eyes around the screen
-	const eyePositions = [
-		{ x: 50, y: 100, rotation: -15 },
-		{ x: 280, y: 150, rotation: 25 },
-		{ x: 30, y: 400, rotation: 45 },
-		{ x: 300, y: 500, rotation: -30 },
-	];
-
-	eyePositions.forEach((pos) => {
-		const eyeContainer = el("div.eyes.title-eyes");
-		const eyeSvg = svgEl(SVGs.evilEyes, "#e67b7b");
-		
-		eyeContainer.style.transform = `translate(${pos.x}px, ${pos.y}px) rotate(${pos.rotation}deg)`;
-		eyeContainer.style.opacity = "0.3";
-		eyeContainer.style.pointerEvents = "none";
-		
-		mount(eyeContainer, eyeSvg);
-		mount(screen, eyeContainer);
-	});
 
 	return screen;
 };
