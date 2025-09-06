@@ -58,7 +58,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	// 	"#FBAA19",
 	// 	64,
 	// 	-8,
-	// 	"https://ko-fi.com/martintale?ref=js13kgames-2025",
+	// 	"https://ko-fi.com/martintale?ref=pet-a-cat",
 	// );
 
 	soundToggle = new EdgeButton(bodyElement, SVGs.sound, "sound", 8, 8);

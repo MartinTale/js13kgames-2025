@@ -1,7 +1,7 @@
 import { rng } from "../helpers/numbers";
 import { Signal, createSignal } from "./signals";
 
-const STATE_KEY = "js13kgames-2025-v1";
+const STATE_KEY = "pet-a-cat";
 
 export type Path = "sound" | "screen";
 
@@ -76,7 +76,7 @@ export function addScoreToLeaderboard(score: number) {
 	if (score === 0) {
 		return;
 	}
-	
+
 	const currentLeaderboard = [...state.leaderboard.value];
 	currentLeaderboard.push(score);
 	currentLeaderboard.sort((a, b) => b - a); // Sort descending
