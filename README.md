@@ -1,6 +1,6 @@
 # Pet-A-Cat
 
-WIP
+Pet-A-Cat is a fast-paced reaction game where players must quickly tap on friendly cat eyes while avoiding dangerous ones. Tap evil eyes to score points, collect heart eyes for extra lives or bonus points, but avoid the deadly X-marked eyes that will cost you a life. As your score increases, the game becomes progressively more challenging with faster spawns and shorter reaction times across 8 difficulty levels from "Kitten" to "Shadow". How many cats can you pet before you get scratched?
 
 ## Usage
 
