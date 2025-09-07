@@ -16,6 +16,7 @@ import { createLevelContainer } from "./components/level/level";
 import { createLevelProgressContainer } from "./components/level-progress/level-progress";
 import { createGameOverScreen } from "./components/game-over/game-over";
 import { createDebugSoundPanel } from "./components/debug-sound-panel/debug-sound-panel";
+import { initOnline } from "./systems/online";
 
 export let bodyElement: HTMLElement;
 export let gameContainer: HTMLElement;
@@ -26,6 +27,7 @@ window.addEventListener("DOMContentLoaded", () => {
 	bodyElement = document.body;
 
 	initState();
+	initOnline();
 	initFireflies();
 
 	state.lives.value = state.maxLives.value;
