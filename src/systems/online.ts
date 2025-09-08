@@ -1,7 +1,7 @@
 // @ts-ignore
 // import PartySocket from "https://js13kgames.com/2025/online/partysocket.js";
 import PartySocket from "partysocket";
-import { state, addActionToLog } from "./state";
+import { state } from "./state";
 
 export function initOnline() {
 	const ws = new PartySocket({
@@ -23,15 +23,11 @@ export function initOnline() {
 				break;
 
 			case "+":
-				const connectedUserId = msg.slice(1);
-				console.log("A client connected, ID:", connectedUserId);
-				addActionToLog("connect", connectedUserId);
+				console.log("A client connected, ID:", msg.slice(1));
 				break;
 
 			case "-":
-				const disconnectedUserId = msg.slice(1);
-				console.log("A client disconnected, ID:", disconnectedUserId);
-				addActionToLog("disconnect", disconnectedUserId);
+				console.log("A client disconnected, ID:", msg.slice(1));
 				break;
 
 			default:
