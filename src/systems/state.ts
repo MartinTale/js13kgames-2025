@@ -1,4 +1,4 @@
-import { rng, uuidv4 } from "../helpers/numbers";
+import { rng } from "../helpers/numbers";
 import { Signal, createSignal } from "./signals";
 
 const STATE_KEY = "pet-a-cat";
@@ -6,7 +6,6 @@ const STATE_KEY = "pet-a-cat";
 export type Path = "sound" | "screen";
 
 export type State = {
-	id: Signal<string>;
 	seed: Signal<number>;
 	lastProcessedAt: Signal<number>;
 	sound: Signal<boolean | null>;
@@ -20,7 +19,6 @@ export type State = {
 };
 
 export const emptyState: State = {
-	id: createSignal(uuidv4()),
 	seed: createSignal(12),
 	// seed: createSignal(Date.now()),
 	lastProcessedAt: createSignal(Date.now()),

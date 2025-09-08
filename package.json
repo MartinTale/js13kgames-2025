@@ -12,17 +12,16 @@
 		"optimize": "node optimize.js"
 	},
 	"devDependencies": {
+		"js13k-vite-plugins": "0.3.4",
 		"@typescript-eslint/eslint-plugin": "6.0.0",
 		"@typescript-eslint/parser": "6.0.0",
 		"eslint": "8.44.0",
 		"eslint-config-prettier": "8.8.0",
 		"eslint-plugin-prettier": "4.2.1",
-		"js13k-vite-plugins": "0.3.4",
 		"prettier": "3.0.0",
 		"terser": "5.31.1",
 		"typescript": "5.5.3",
-		"vite": "5.3.3",
-		"partysocket": "^1.1.5"
+		"vite": "5.3.3"
 	},
 	"prettier": {
 		"printWidth": 120,
