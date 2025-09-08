@@ -5,6 +5,12 @@ const STATE_KEY = "pet-a-cat";
 
 export type Path = "sound" | "screen";
 
+export type ActionLogEntry = {
+	timestamp: number;
+	type: "connect" | "disconnect";
+	userId: string;
+};
+
 export type State = {
 	id: Signal<string>;
 	seed: Signal<number>;
@@ -17,6 +23,7 @@ export type State = {
 	lastDamageType: Signal<"evil" | "dead" | null>;
 	score: Signal<number>;
 	leaderboard: Signal<number[]>;
+	actionLog: Signal<ActionLogEntry[]>;
 };
 
 export const emptyState: State = {
@@ -32,6 +39,7 @@ export const emptyState: State = {
 	lastDamageType: createSignal(null),
 	score: createSignal(0),
 	leaderboard: createSignal([]),
+	actionLog: createSignal([]),
 };
 
 export let state: State;
@@ -83,6 +91,19 @@ export function addScoreToLeaderboard(score: number) {
 	currentLeaderboard.push(score);
 	currentLeaderboard.sort((a, b) => b - a); // Sort descending
 	state.leaderboard.value = currentLeaderboard.slice(0, 5); // Keep top 5
+}
+
+export function addActionToLog(type: "connect" | "disconnect", userId: string) {
+	const currentLog = [...state.actionLog.value];
+	const newEntry: ActionLogEntry = {
+		timestamp: Date.now(),
+		type,
+		userId,
+	};
+	
+	currentLog.push(newEntry);
+	// Keep only last 50 entries to prevent unbounded growth
+	state.actionLog.value = currentLog.slice(-50);
 }
 
 function saveState() {
